@@ -7,6 +7,7 @@ public class Score : MonoBehaviour
     public delegate void Delegate();
     public Delegate addScore = null;
     TextMeshProUGUI scoreText = null;
+    readonly string scoreTextObject = "ScoreText";
     float restartTime = 2f;
     int score = 0;
     readonly int maxScore = 7;
@@ -26,7 +27,7 @@ public class Score : MonoBehaviour
     }
     void Start()
     {
-        scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
+        scoreText = GameObject.Find(scoreTextObject).GetComponent<TextMeshProUGUI>();
     }
     IEnumerator RestartLevel()
     {

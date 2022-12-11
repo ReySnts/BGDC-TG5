@@ -1,21 +1,18 @@
 using UnityEngine;
 public class EnemyGhost : Enemy
 {
-    Transform player = null;
-    string targetObj = "Player";
-    float minRange = 1.125f;
-    float maxRange = 5f;
     float speed = 3f;
-    Vector3 basePosition = Vector3.zero;
-    void Start()
+    protected override void FollowPlayer()
     {
-        player = GameObject.Find(targetObj).GetComponent<Transform>();
-        enemyAnim = GetComponent<Animator>();
-        basePosition = transform.position;
+        MoveTo(enemyTarget.position);
+    }
+    protected override void BackToBase()
+    {
+        MoveTo(basePosition);
     }
     void MoveTo(Vector3 target)
     {
-        transform.position = Vector3.MoveTowards
+        transform.position = Vector2.MoveTowards
         (
             transform.position, 
             target, 
@@ -24,45 +21,11 @@ public class EnemyGhost : Enemy
         SetAnim
         (
             target.x - transform.position.x,
-            target.y - transform.position.y,
-            movement.sqrMagnitude
+            target.y - transform.position.y
         );
     }
     void Update()
     {
-        if
-        (
-            Vector3.Distance
-            (
-                transform.position,
-                player.position
-            ) >= minRange 
-            &&
-            Vector3.Distance
-            (
-                transform.position,
-                player.position
-            ) <= maxRange
-        ) MoveTo(player.position);
-        else if 
-        (
-            Vector3.Distance
-            (
-                transform.position,
-                basePosition
-            ) == minRange
-        ) enemyAnim.SetFloat
-        (
-            "Speed",
-            minRange
-        );
-        else if
-        (
-            Vector3.Distance
-            (
-                transform.position,
-                player.position
-            ) > maxRange
-        ) MoveTo(basePosition);
+        CheckRange();
     }
 }
