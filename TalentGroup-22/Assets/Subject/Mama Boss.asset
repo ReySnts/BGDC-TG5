@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bae779ad0cd3e541b16083651fcc1b8, type: 3}
   m_Name: Mama Boss
   m_EditorClassIdentifier: 
-  SubjectName: Mama
+  SubjectName: ???
   BorderColor: {r: 0, g: 0, b: 0, a: 0}
   InnerColor: {r: 0, g: 0, b: 0, a: 0}
   SubjectFace: {fileID: 21300008, guid: f0baf80cf911ff44094646d89b46145f, type: 3}
