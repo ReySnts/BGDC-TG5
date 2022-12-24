@@ -1,59 +1,219 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 public class EnemyAI : Enemy
 {
-    protected Seeker pathMaker = null;
+    Seeker pathMaker = null;
     Path pathToTarget = null;
     protected Rigidbody2D enemyBody = null;
     protected float wayPointDistance = 1.5f;
-    float followSpeed = 300f;
     float currentPointDistance = 0f;
     int currentTotalPathLine = 0;
-    protected bool hasReachedPatrolPosition = false;
-    protected bool hasLostTarget = false;
-    protected bool hasStartedToPatrol = false;
+    int index = 1;
+    int lockerLen = 0;
+    bool hasTouchedLocker = false;
+    bool hasSetLockerDestination = false;
+    bool isSearchingLocker = false;
     Vector2 currentPathPointPosition = Vector2.zero;
     Vector2 followDirection = Vector2.zero;
     Vector2 followForce = Vector2.zero;
-    protected void Start()
+    List<Transform> lockers = new List<Transform>();
+    List<Transform> lockersInRange = new List<Transform>();
+    string lockerName = null;
+    string lockerNameBeingSearched = null;
+    void Start()
     {
         pathMaker = GetComponent<Seeker>();
         enemyBody = GetComponent<Rigidbody2D>();
         enemyBody.gravityScale = 0f;
         minRange = wayPointDistance;
+        maxRange *= 2f;
         InvokeRepeating
         (
             "UpdatePathOverTime",
             0f,
             0.5f
         );
+        #region List All Lockers
+        lockerName = Player.objInstance.lockerName;
+        try
+        {
+            lockers.Add
+            (
+                GameObject.Find(lockerName).transform
+            );
+            lockerName += " (";
+        }
+        catch{}
+        index = 1;
+        while (index > 0)
+        {
+            try
+            {
+                lockers.Add
+                (
+                    GameObject.Find(lockerName + index + ")").transform
+                );
+                index++;
+            }
+            catch
+            {
+                break;
+            }
+        }
+        lockerName = Player.objInstance.lockerName;
+        lockerLen = lockerName.Length;
+        #endregion
+    }
+    void OnCollisionStay2D(Collision2D other) 
+    {
+        if 
+        (
+            other.gameObject.name.Substring
+            (
+                0,
+                lockerLen
+            )
+            == lockerName
+        )
+        {
+            hasTouchedLocker = true;
+            lockerNameBeingSearched = other.gameObject.name;
+        }
+    }
+    void OnCollisionExit2D(Collision2D other) 
+    {
+        if 
+        (
+            other.gameObject.name.Substring
+            (
+                0,
+                lockerLen
+            )
+            == lockerName
+        )
+        hasTouchedLocker = false;
+    }
+    void SuccessFindPlayer()
+    {
+        enemyTarget = GameObject.Find(playerName).transform;
+    }
+    IEnumerator SearchingLocker(string lockerNameBeingSearched)
+    {
+        yield return new WaitForSeconds(5f);
+        isSearchingLocker = hasSetLockerDestination = false;
+        if 
+        (
+            lockerNameBeingSearched
+            ==
+            Player.objInstance.lockerFullName
+        )
+        {
+            PlayerHide.objInstance.fail?.Invoke();
+            SuccessFindPlayer();
+        }
     }
     void UpdatePathOverTime()
     {
+        #region List All Lockers In Range
+        lockersInRange.Clear();
+        foreach (Transform locker in lockers) 
+        {
+            if 
+            (
+                Vector2.Distance
+                (
+                    transform.position,
+                    locker.position
+                )
+                >= minRange
+                &&
+                Vector2.Distance
+                (
+                    transform.position,
+                    locker.position
+                )
+                <= maxRange
+            ) 
+            lockersInRange.Add(locker);
+        }
+        #endregion
+        #region Set Target
+        if (PlayerHide.objInstance.hasClicked)
+        {
+            if 
+            (
+                !hasSetLockerDestination
+                &&
+                lockersInRange.Count > 0
+            )
+            {
+                hasSetLockerDestination = true;
+                index = Random.Range
+                (
+                    0,
+                    lockersInRange.Count
+                );
+                enemyTarget = lockersInRange[index];
+            }
+        }
+        else 
+        {
+            SuccessFindPlayer();
+            if (hasSetLockerDestination) 
+            {
+                hasSetLockerDestination = false;
+                StopCoroutine("SearchingLocker");
+            }
+        }
+        #endregion
+        #region Search Locker
+        if 
+        (
+            hasSetLockerDestination
+            &&
+            !isSearchingLocker
+        )
+        {
+            isSearchingLocker = true;
+            StartCoroutine
+            (
+                SearchingLocker(lockerNameBeingSearched)
+            );
+        }
+        #endregion
         CheckRange();
     }
-    protected override void FollowPlayer()
+    protected override void FollowTarget()
     {
-        if (pathMaker.IsDone()) pathMaker.StartPath
+        if 
+        (
+            pathMaker.IsDone()
+        ) 
+        pathMaker.StartPath
         (
             enemyBody.position, 
             enemyTarget.position,
             CallAfterCalculating
         );
-        hasLostTarget = true;
     }
     protected virtual void Patrol(){}
     protected override void BackToBase()
     {
         Patrol();
-        if (pathMaker.IsDone()) pathMaker.StartPath
+        if 
+        (
+            pathMaker.IsDone()
+        ) 
+        pathMaker.StartPath
         (
             enemyBody.position, 
-            basePosition,
+            basePosition, 
             CallAfterCalculating
         );
     }
-    protected void CallAfterCalculating(Path calculatedPath)
+    void CallAfterCalculating(Path calculatedPath)
     {
         if (!calculatedPath.error)
         {
@@ -61,7 +221,7 @@ public class EnemyAI : Enemy
             currentTotalPathLine = 0;
         }
     }
-    protected void FixedUpdate()
+    void FixedUpdate()
     {
         if 
         (
@@ -72,19 +232,25 @@ public class EnemyAI : Enemy
         {
             currentPathPointPosition = (Vector2) pathToTarget.vectorPath[currentTotalPathLine];
             followDirection = (currentPathPointPosition - enemyBody.position).normalized;
-            followForce = followDirection * followSpeed * Time.fixedDeltaTime;
+            followForce = followDirection * speed * Time.fixedDeltaTime;
             enemyBody.AddForce(followForce);
             currentPointDistance = Vector2.Distance
             (
                 currentPathPointPosition, 
                 enemyBody.position
             ); 
-            if (currentPointDistance < wayPointDistance) currentTotalPathLine++;
+            if 
+            (
+                currentPointDistance 
+                < 
+                wayPointDistance
+            ) 
+            currentTotalPathLine++;
+            SetAnim
+            (
+                followDirection.x,
+                followDirection.y
+            );
         }
-        SetAnim
-        (
-            followDirection.x,
-            followDirection.y
-        );
     }
 }

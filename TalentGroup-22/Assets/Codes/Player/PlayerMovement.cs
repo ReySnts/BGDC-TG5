@@ -2,12 +2,11 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement objInstance = null;
-    readonly string objName = "Player";
     Rigidbody2D playerRigidbody = null;
     Animator playerAnimator = null;
-    public float speed = 0f;
-    public float runSpeed = 0f;
-    public float normalSpeed = 0f;
+    float speed = 0f;
+    float runSpeed = 4f;
+    float normalSpeed = 2f;
     bool isRunning = false;
     Vector2 movement = Vector2.zero;
     void Awake()
@@ -17,8 +16,8 @@ public class PlayerMovement : MonoBehaviour
     }
     void Start()
     {
-        playerRigidbody = GameObject.Find(objName).GetComponent<Rigidbody2D>();
-        playerAnimator = GameObject.Find(objName).GetComponent<Animator>();
+        playerRigidbody = Player.objInstance.game_object.GetComponent<Rigidbody2D>();
+        playerAnimator = Player.objInstance.game_object.GetComponent<Animator>();
     }
     void Update()
     {
@@ -27,7 +26,10 @@ public class PlayerMovement : MonoBehaviour
         movement.y = Input.GetAxisRaw("Vertical");
         #endregion
         #region Run
-        if (Input.GetKey(KeyCode.LeftShift))
+        if 
+        (
+            Input.GetKey(KeyCode.LeftShift)
+        )
         {
             isRunning = true;
             speed = runSpeed;
@@ -39,9 +41,21 @@ public class PlayerMovement : MonoBehaviour
         }
         #endregion
         #region Set Anim
-        playerAnimator.SetFloat("Horizontal", movement.x);
-        playerAnimator.SetFloat("Vertical", movement.y);
-        playerAnimator.SetFloat("Speed", movement.sqrMagnitude);
+        playerAnimator.SetFloat
+        (
+            "Horizontal", 
+            movement.x
+        );
+        playerAnimator.SetFloat
+        (
+            "Vertical", 
+            movement.y
+        );
+        playerAnimator.SetFloat
+        (
+            "Speed", 
+            movement.sqrMagnitude
+        );
         #endregion
     }
     void FixedUpdate()

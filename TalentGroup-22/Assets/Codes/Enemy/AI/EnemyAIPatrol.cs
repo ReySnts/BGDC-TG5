@@ -2,7 +2,8 @@ using UnityEngine;
 public class EnemyAIPatrol : EnemyAI
 {
     public Vector2[] patrolPositions = new Vector2[4];
-    int index = 0;
+    bool hasReachedPatrolPosition = false;
+    int patrolIndex = 0;
     protected override void Patrol()
     {
         if
@@ -18,11 +19,11 @@ public class EnemyAIPatrol : EnemyAI
             if (!hasReachedPatrolPosition)
             {
                 hasReachedPatrolPosition = true;
-                index++;
-                if (index == patrolPositions.Length) index = 0;
+                patrolIndex++;
+                if (patrolIndex == patrolPositions.Length) patrolIndex = 0;
             }
         }
         else hasReachedPatrolPosition = false;
-        basePosition = patrolPositions[index];
+        basePosition = patrolPositions[patrolIndex];
     }
 }

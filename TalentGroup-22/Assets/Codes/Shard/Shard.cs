@@ -23,7 +23,12 @@ public class Shard : MonoBehaviour
     }
     void Update()
     {
-        if (isTriggered && Input.GetKeyDown(KeyCode.F))
+        if 
+        (
+            isTriggered 
+            && 
+            Input.GetKeyDown(KeyCode.F)
+        )
         {
             Score.objInstance.addScore?.Invoke();
             Destroy(gameObject);

@@ -1,8 +1,7 @@
 using UnityEngine;
 public class EnemyGhost : Enemy
 {
-    float speed = 3f;
-    protected override void FollowPlayer()
+    protected override void FollowTarget()
     {
         MoveTo(enemyTarget.position);
     }

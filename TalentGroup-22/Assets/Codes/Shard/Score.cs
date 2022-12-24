@@ -20,6 +20,7 @@ public class Score : MonoBehaviour
     void AddScore()
     {
         score++;
+        SoundManager.objInstance.Crystal_get.Play();
     }
     void OnEnable()
     {
@@ -36,7 +37,12 @@ public class Score : MonoBehaviour
     }
     void Update()
     {
-        if (!isMaxed && score >= maxScore) 
+        if 
+        (
+            !isMaxed 
+            && 
+            score >= maxScore
+        ) 
         {
             isMaxed = true;
             StartCoroutine(RestartLevel());

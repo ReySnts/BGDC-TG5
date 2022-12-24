@@ -4,8 +4,10 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     public static PlayerHealth objInstance = null;
+    GameObject bloodObject = null;
     Image bloodImage = null;
-    readonly string bloodObject = "Blood";
+    Animator bloodAnimator = null;
+    readonly string bloodObjectName = "Blood";
     public float currentHealth = 0f;
     float minimumHealth = 0f;
     float maximumHealth = 100f;
@@ -19,22 +21,40 @@ public class PlayerHealth : MonoBehaviour
     }
     void Start()
     {
-        bloodImage = GameObject.Find(bloodObject).GetComponent<Image>();
+        bloodObject = GameObject.Find(bloodObjectName);
+        bloodImage = bloodObject.GetComponent<Image>();
+        bloodAnimator = bloodObject.GetComponent<Animator>();
         currentHealth = maximumHealth;
     }
     IEnumerator HoldRegen()
     {
         yield return new WaitForSeconds(1f);
-        isRegen = false;
         currentHealth += regenAmount;
+        if 
+        (
+            Player.objInstance.isCollidingEnemy
+            ||
+            Player.objInstance.isTriggeringEnemyGhost
+        ) 
+        currentHealth -= regenAmount;
+        isRegen = false;
+    }
+    IEnumerator HoldRestart()
+    {
+        yield return new WaitForSeconds(2f);
+        Scene.objInstance.Restart();
     }
     void Update()
     {
-        currentHealth = Mathf.Clamp
+        bloodAnimator.SetFloat
         (
-            currentHealth,
-            minimumHealth,
-            maximumHealth
+            "currentHealth",
+            currentHealth = Mathf.Clamp
+            (
+                currentHealth,
+                minimumHealth,
+                maximumHealth
+            )
         );
         if
         (
@@ -44,14 +64,19 @@ public class PlayerHealth : MonoBehaviour
         )
         {
             isDie = true;
-            Scene.objInstance.Restart();
+            SoundManager.objInstance.Crystal_get.enabled = false;
+            SoundManager.objInstance.Game_over.Play();
+            StartCoroutine
+            (
+                HoldRestart()
+            );
         }
-        if
+        bloodAnimator.SetBool
         (
-            !Enemy.isHittingPlayer
-            &&
-            !isRegen
-        )
+            "isDie",
+            isDie
+        );
+        if (!isRegen) 
         {
             isRegen = true;
             StartCoroutine
@@ -59,5 +84,10 @@ public class PlayerHealth : MonoBehaviour
                 HoldRegen()
             );
         }
+        bloodAnimator.SetBool
+        (
+            "isWaitingToHit",
+            Enemy.isWaitingToHit
+        );
     }
 }
