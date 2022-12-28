@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Mama Boss
   m_EditorClassIdentifier: 
   SubjectName: ???
-  BorderColor: {r: 0, g: 0, b: 0, a: 0}
+  BorderColor: {r: 1, g: 1, b: 1, a: 0}
   InnerColor: {r: 0, g: 0, b: 0, a: 0}
-  SubjectFace: {fileID: 21300008, guid: f0baf80cf911ff44094646d89b46145f, type: 3}
+  SubjectFace: {fileID: 21300000, guid: 5478babf7360d924799cbee52225193a, type: 3}

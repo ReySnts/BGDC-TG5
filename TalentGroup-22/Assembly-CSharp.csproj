@@ -69,6 +69,7 @@
     <Compile Include="Assets\PlayerMovement.cs" />
     <Compile Include="Assets\Codes\Player\Shard.cs" />
     <Compile Include="Assets\Codes\Enemy\EnemyAI.cs" />
+    <Compile Include="Assets\Codes\UI\Door.cs" />
     <Compile Include="Assets\Codes\Scene\SceneCodes.cs" />
     <Compile Include="Assets\Codes\Enemy\EnemyGhost.cs" />
     <Compile Include="Assets\Codes\UI\PauseMenu.cs" />

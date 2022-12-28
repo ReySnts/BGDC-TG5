@@ -7,16 +7,7 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
-    PlayerManager playerPosData;
     
-   
-
-    private void Start()
-    {
-       playerPosData = FindObjectOfType<PlayerManager>();
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -30,6 +21,7 @@ public class PauseMenu : MonoBehaviour
                 Pause();
             }
         }
+        
     }
 
     public void Resume ()
@@ -49,15 +41,18 @@ public class PauseMenu : MonoBehaviour
     public void Restart ()
     {
         Time.timeScale = 1f;
-        playerPosData.DeleteData();
-        PlayerPrefs.DeleteKey("SavedScene");
+        DeleteKey();
         SceneManager.LoadScene("InputName");
     }
     public void MenuGame()
     {
-        playerPosData.SaveData();
-
-        PlayerPrefs.SetInt("SavedScene", SceneManager.GetActiveScene().buildIndex);
         SceneManager.LoadScene("Menu");
+    }
+
+    public void DeleteKey()
+    {
+        PlayerPrefs.DeleteKey("SavedScene");
+        PlayerPrefs.DeleteKey("playerName");
+        PlayerPrefs.DeleteAll();
     }
 }

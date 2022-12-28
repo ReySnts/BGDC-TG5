@@ -18,10 +18,6 @@ public class Score : MonoBehaviour
     {
         if (objInstance == null) objInstance = this;
         else if (objInstance != this) Destroy(gameObject);
-
-    //** this pralyerprefs
-        playerScore = FindObjectOfType<PlayerManager>();
-        playerScore.LoadData();
        
     }
 
@@ -53,13 +49,14 @@ public class Score : MonoBehaviour
         if (!isMaxed && score >= maxScore)
         {
             isMaxed = true;
-            StartCoroutine(RestartLevel());
+          //  StartCoroutine(RestartLevel());
         }
         else
         {
             PlayerPrefs.SetInt("SavedScore", score);
             scoreText.text = score.ToString();
         }
+
         
     }
 
