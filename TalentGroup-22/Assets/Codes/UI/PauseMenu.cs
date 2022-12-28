@@ -50,6 +50,7 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         playerPosData.DeleteData();
+        PlayerPrefs.DeleteKey("SavedScene");
         SceneManager.LoadScene("InputName");
     }
     public void MenuGame()

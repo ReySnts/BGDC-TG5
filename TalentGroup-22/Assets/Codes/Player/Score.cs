@@ -12,32 +12,20 @@ public class Score : MonoBehaviour
     readonly int maxScore = 7;
     bool isMaxed = false;
 
-    PlayerManager playerScore;
+   PlayerManager playerScore;
 
     void Awake()
     {
         if (objInstance == null) objInstance = this;
         else if (objInstance != this) Destroy(gameObject);
-        PlayerPrefs.GetInt("SavdeScore");
 
-    //this pralyerprefs
+    //** this pralyerprefs
         playerScore = FindObjectOfType<PlayerManager>();
         playerScore.LoadData();
-
+       
     }
 
 
-    /**this json
-    public void LoadData(GameData data)
-    {
-        this.score = data.shardCount;
-    }
-
-    public void SaveData(GameData data)
-    {
-        data.shardCount = this.score;
-    }
-    */
     public void AddScore()
     {
         score++;
@@ -49,7 +37,8 @@ public class Score : MonoBehaviour
     }
     void Start()
     {
-        score = PlayerPrefs.GetInt("SavedScore");
+        score = PlayerPrefs.GetInt("SavedScore", 0);
+        
         scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
     }
 
@@ -66,8 +55,12 @@ public class Score : MonoBehaviour
             isMaxed = true;
             StartCoroutine(RestartLevel());
         }
-        else scoreText.text = score.ToString();
-        PlayerPrefs.SetInt("SavedScore", score);
+        else
+        {
+            PlayerPrefs.SetInt("SavedScore", score);
+            scoreText.text = score.ToString();
+        }
+        
     }
 
     void OnDisable()

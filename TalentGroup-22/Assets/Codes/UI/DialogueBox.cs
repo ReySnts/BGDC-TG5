@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class DialogueBox : MonoBehaviour
 {
@@ -20,13 +21,14 @@ public class DialogueBox : MonoBehaviour
     public TMP_InputField nameField;
 
     private int DialogueIndex;
-    private bool CanContinue;
+  //  private bool CanContinue;
 
     // Start is called before the first frame update
     void Start()
     {
         SetStyle(DialogueSegments[0].Speaker);
         StartCoroutine(PlayDialogue(DialogueSegments[0].Dialogue));
+        
     }
 
     // Update is called once per frame
@@ -34,18 +36,24 @@ public class DialogueBox : MonoBehaviour
     {
         //    SkipIndicator.enabled = CanContinue; && CanContinue
         if (Input.GetKeyDown(KeyCode.Space) )
-        {
+        { 
             DialogueIndex++;
             if (DialogueIndex == DialogueSegments.Length)
             {
-                gameObject.SetActive(false);
+                SceneManager.LoadScene("Level-1"); 
+                //gameObject.SetActive(false);
+               
                 return;
+                
             }
+            PlayerPrefs.SetString("SavedName", nameField.text);
             SetStyle(DialogueSegments[DialogueIndex].Speaker);
-            StartCoroutine(PlayDialogue(DialogueSegments[DialogueIndex].Dialogue));
+            StartCoroutine(PlayDialogue(DialogueSegments[DialogueIndex].Dialogue.Replace("playerName", (PlayerPrefs.GetString("SavedName")))));
         }
-           
         
+        
+
+
     }
 
     void SetStyle(Subject Speaker)
@@ -75,17 +83,7 @@ public class DialogueBox : MonoBehaviour
         }
     }
 
-    string  playerName;
-    public void SaveUsername()
-    {
-        if (string.IsNullOrEmpty(nameField.text) == false)
-        {
-            playerName = nameField.text;
 
-            DialogueDisplay.text = DialogueSegments[1].Dialogue.Replace("playerName", playerName);
-
-        }
-    }
 
 }
 

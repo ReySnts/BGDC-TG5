@@ -58,10 +58,11 @@
   <ItemGroup>
     <Compile Include="Assets\Codes\Player\Score.cs" />
     <Compile Include="Assets\Codes\Scene\Load\Data.cs" />
-    <Compile Include="Assets\Codes\UI\InputName.cs" />
+    <Compile Include="Assets\Codes\Scene\Audio\AudioManager.cs" />
     <Compile Include="Assets\Codes\Enemy\Enemy.cs" />
     <Compile Include="Assets\Codes\Scene\Load\LevelLoader.cs" />
     <Compile Include="Assets\Codes\UI\DialogueBox.cs" />
+    <Compile Include="Assets\Codes\Scene\Menu\VolumeSetting.cs" />
     <Compile Include="Assets\Codes\Player\PlayerManager.cs" />
     <Compile Include="Assets\Codes\UI\Subject.cs" />
     <Compile Include="Assets\Codes\Player\PlayerMovement.cs" />
