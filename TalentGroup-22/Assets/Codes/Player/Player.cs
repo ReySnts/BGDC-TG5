@@ -2,7 +2,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public static Player objInstance = null;
-    public GameObject game_object = null;
     public bool isCollidingEnemy = false;
     public bool isCollidingLocker = false;
     public bool isTriggeringEnemyGhost = false;
@@ -10,7 +9,6 @@ public class Player : MonoBehaviour
     public string lockerFullName = null;
     readonly string enemyName = "Enemy";
     readonly string enemyGhostName = "EnemyGhost";
-    readonly string playerName = "Player";
     int enemyLen = 0;
     int enemyGhostLen = 0;
     int lockerLen = 0;
@@ -18,10 +16,6 @@ public class Player : MonoBehaviour
     {
         if (objInstance == null) objInstance = this;
         else if (objInstance != this) Destroy(gameObject);
-    }
-    void OnEnable() 
-    {
-        game_object = GameObject.Find(playerName);
     }
     void Start()
     {
@@ -114,6 +108,20 @@ public class Player : MonoBehaviour
     }
     void Update() 
     {
-        if (isTriggeringEnemyGhost) PlayerHide.objInstance.fail?.Invoke();
+        if 
+        (
+            !PlayerHealth.objInstance.isDie
+            &&
+            PlayerHide.objInstance.hasClicked
+            &&
+            isTriggeringEnemyGhost
+        ) 
+        PlayerHide.objInstance.fail?.Invoke();
+        if (Splash.hasHitPlayer) 
+        {
+            Splash.hasHitPlayer = false;
+            Enemy.isWaitingToHit = false;
+        }
+        else Enemy.isWaitingToHit = true;
     }
 }

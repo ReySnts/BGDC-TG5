@@ -2,8 +2,9 @@ using UnityEngine;
 public class PlayerHide : MonoBehaviour
 {
     public static PlayerHide objInstance = null;
-    public delegate void Delegate();
-    public Delegate fail = null;
+    public delegate void Hide();
+    public Hide fail = null;
+    public Hide success = null;
     SpriteRenderer playerSprite = null;
     BoxCollider2D playerBoxCollider = null;
     GameObject playerMovementObject = null;
@@ -13,6 +14,13 @@ public class PlayerHide : MonoBehaviour
     {
         if (objInstance == null) objInstance = this;
         else if (objInstance != this) Destroy(gameObject);
+    }
+    void Success()
+    {
+        hasClicked = true;
+        playerSprite.enabled = false;
+        playerBoxCollider.isTrigger = true;
+        playerMovementObject.SetActive(false);
     }
     void Fail()
     {
@@ -24,12 +32,13 @@ public class PlayerHide : MonoBehaviour
     void OnEnable()
     {
         fail += Fail;
+        success += Success;
     }
     void Start()
     {
         playerMovementObject = GameObject.Find(playerMovementName);
-        playerSprite = Player.objInstance.game_object.GetComponent<SpriteRenderer>();
-        playerBoxCollider = Player.objInstance.game_object.GetComponent<BoxCollider2D>();
+        playerSprite = Player.objInstance.gameObject.GetComponent<SpriteRenderer>();
+        playerBoxCollider = Player.objInstance.gameObject.GetComponent<BoxCollider2D>();
         Fail();
     }
     void Update()
@@ -39,23 +48,13 @@ public class PlayerHide : MonoBehaviour
             Input.GetKeyDown(KeyCode.E)
         )
         {
-            if (!hasClicked) 
-            {
-                if (Player.objInstance.isCollidingLocker) 
-                {
-                    #region Success
-                    hasClicked = true;
-                    playerSprite.enabled = false;
-                    playerBoxCollider.isTrigger = true;
-                    playerMovementObject.SetActive(false);
-                    #endregion
-                }
-            }
-            else Fail();
+            if (hasClicked) Fail();
+            else if (Player.objInstance.isCollidingLocker) Success();
         }
     }
     void OnDisable()
     {
         fail -= Fail;
+        success -= Success;
     }
 }

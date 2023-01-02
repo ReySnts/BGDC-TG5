@@ -9,10 +9,10 @@ public class PlayerHealth : MonoBehaviour
     Animator bloodAnimator = null;
     readonly string bloodObjectName = "Blood";
     public float currentHealth = 0f;
-    float minimumHealth = 0f;
+    public float minimumHealth = 0f;
     float maximumHealth = 100f;
     float regenAmount = 5f;
-    bool isDie = false;
+    public bool isDie = false;
     bool isRegen = false;
     void Awake()
     {
@@ -64,8 +64,13 @@ public class PlayerHealth : MonoBehaviour
         )
         {
             isDie = true;
+            PlayerHide.objInstance.success?.Invoke();
+            #region Play Game Over Sound
             SoundManager.objInstance.Crystal_get.enabled = false;
+            SoundManager.objInstance.walk.enabled = false;
+            SoundManager.objInstance.run.enabled = false;
             SoundManager.objInstance.Game_over.Play();
+            #endregion
             StartCoroutine
             (
                 HoldRestart()

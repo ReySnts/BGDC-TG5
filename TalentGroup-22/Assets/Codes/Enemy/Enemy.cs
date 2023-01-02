@@ -3,13 +3,13 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour
 {
     protected Transform enemyTarget = null;
-    Animator enemyAnim = null;
-    protected readonly string playerName = "Player";
+    protected Animator enemyAnim = null;
     protected float minRange = 1.125f;
     protected float maxRange = 5f;
     protected float speed = 0f;
     float aISpeed = 300f;
     float ghostSpeed = 3f;
+    float bossSpeed = 0.3f;
     float minClamp = -1f;
     float maxClamp = 1f;
     float damageAmount = 20f;
@@ -17,14 +17,40 @@ public abstract class Enemy : MonoBehaviour
     bool hasHitPlayer = false;
     protected Vector2 basePosition = Vector2.zero;
     Vector2 movement = Vector2.zero;
+    void ResetSpeed(bool isAwake) 
+    {
+        switch(this)
+        {
+            case EnemyAI:
+                speed = aISpeed;
+                break;
+            case EnemyGhostBoss:
+                speed = bossSpeed;
+                if (isAwake) 
+                {
+                    minRange = 4f;
+                    maxRange *= 10f;
+                }
+                break;
+            case EnemyGhost:
+                speed = ghostSpeed;
+                break;
+        }
+    }
     void Awake()
     {
-        enemyTarget = GameObject.Find(playerName).transform;
         enemyAnim = GetComponent<Animator>();
-        if (this is EnemyGhost) speed = ghostSpeed;
-        else speed = aISpeed;
         basePosition = transform.position;
         isWaitingToHit = false;
+        ResetSpeed(true);
+    }
+    void OnEnable() 
+    {
+        try
+        {
+            enemyTarget = Player.objInstance.gameObject.transform;
+        }
+        catch{}
     }
     IEnumerator HoldHit()
     {
@@ -33,90 +59,102 @@ public abstract class Enemy : MonoBehaviour
     }
     void LateUpdate()
     {
-        if
-        (
-            Vector2.Distance
-            (
-                transform.position,
-                enemyTarget.position
-            )
-            <= minRange
-        )
+        try
         {
-            #region Stop Enemy
-            speed = 0f;
-            SetAnim
+            if
             (
-                speed,
-                speed
-            );
-            #endregion
-            #region Attack Player
-            if 
-            (
-                enemyTarget.gameObject.name == playerName
-                &&
-                !hasHitPlayer
-                &&
+                Vector2.Distance
                 (
-                    this is EnemyGhost
-                    ||
-                    (
-                        this is EnemyAI
-                        &&
-                        !PlayerHide.objInstance.hasClicked
-                    )
+                    transform.position,
+                    enemyTarget.position
                 )
+                <= minRange
             )
             {
-                hasHitPlayer = true;
-                isWaitingToHit = false;
-                PlayerHealth.objInstance.currentHealth -= damageAmount;
-                StartCoroutine
+                #region Stop Enemy
+                speed = 0f;
+                SetAnim
                 (
-                    HoldHit()
+                    speed,
+                    speed
                 );
+                #endregion
+                #region Melee Attack
+                if 
+                (
+                    enemyTarget.gameObject.name == Player.objInstance.gameObject.name
+                    &&
+                    !hasHitPlayer
+                    &&
+                    (
+                        this is EnemyGhost
+                        ||
+                        (
+                            this is EnemyAI
+                            &&
+                            !PlayerHide.objInstance.hasClicked
+                        )
+                    )
+                )
+                {
+                    hasHitPlayer = true;
+                    isWaitingToHit = false;
+                    #region Melee Damage
+                    switch(this)
+                    {
+                        case EnemyGhostBoss:
+                            PlayerHealth.objInstance.currentHealth = PlayerHealth.objInstance.minimumHealth;
+                            break;
+                        default:
+                            PlayerHealth.objInstance.currentHealth -= damageAmount;
+                            StartCoroutine
+                            (
+                                HoldHit()
+                            );
+                            break;
+                    }
+                    #endregion
+                }
+                else isWaitingToHit = true;
+                #endregion
             }
-            else isWaitingToHit = true;
-            #endregion
+            else ResetSpeed(false);
         }
-        else
-        {
-            #region Move Enemy
-            if (this is EnemyGhost) speed = ghostSpeed;
-            else speed = aISpeed;
-            #endregion
-        }
+        catch{}
     }
     protected abstract void FollowTarget();
     protected abstract void BackToBase();
     protected void CheckRange()
     {
-        if
-        (
-            Vector2.Distance
+        try
+        {
+            if
             (
-                transform.position,
-                enemyTarget.position
-            ) 
-            >= minRange 
-            &&
-            Vector2.Distance
+                Vector2.Distance
+                (
+                    transform.position,
+                    enemyTarget.position
+                ) 
+                >= minRange 
+                &&
+                Vector2.Distance
+                (
+                    transform.position,
+                    enemyTarget.position
+                ) 
+                <= maxRange
+            ) FollowTarget();
+            else if
             (
-                transform.position,
-                enemyTarget.position
-            ) 
-            <= maxRange
-        ) FollowTarget();
-        else if
-        (
-            Vector2.Distance
-            (
-                transform.position,
-                enemyTarget.position
-            ) 
-            > maxRange
-        ) BackToBase();
+                Vector2.Distance
+                (
+                    transform.position,
+                    enemyTarget.position
+                ) 
+                > maxRange
+            ) BackToBase();
+        }
+        catch{}
     }
     protected void SetAnim
     (
@@ -124,30 +162,33 @@ public abstract class Enemy : MonoBehaviour
         float vertical
     )
     {
-        enemyAnim.SetFloat
-        (
-            "Horizontal",
-            movement.x = Mathf.Clamp
+        if (enemyAnim != null) 
+        {
+            enemyAnim.SetFloat
             (
-                horizontal,
-                minClamp,
-                maxClamp
-            )
-        );
-        enemyAnim.SetFloat
-        (
-            "Vertical",
-            movement.y = Mathf.Clamp
+                "Horizontal",
+                movement.x = Mathf.Clamp
+                (
+                    horizontal,
+                    minClamp,
+                    maxClamp
+                )
+            );
+            enemyAnim.SetFloat
             (
-                vertical,
-                minClamp,
-                maxClamp
-            )
-        );
-        enemyAnim.SetFloat
-        (
-            "Speed",
-            movement.sqrMagnitude
-        );
+                "Vertical",
+                movement.y = Mathf.Clamp
+                (
+                    vertical,
+                    minClamp,
+                    maxClamp
+                )
+            );
+            enemyAnim.SetFloat
+            (
+                "Speed",
+                movement.sqrMagnitude
+            );
+        }
     }
 }

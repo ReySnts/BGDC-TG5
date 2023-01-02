@@ -97,7 +97,7 @@ public class EnemyAI : Enemy
     }
     void SuccessFindPlayer()
     {
-        enemyTarget = GameObject.Find(playerName).transform;
+        enemyTarget = Player.objInstance.gameObject.transform;
     }
     IEnumerator SearchingLocker(string lockerNameBeingSearched)
     {
@@ -105,6 +105,8 @@ public class EnemyAI : Enemy
         isSearchingLocker = hasSetLockerDestination = false;
         if 
         (
+            !PlayerHealth.objInstance.isDie
+            &&
             lockerNameBeingSearched
             ==
             Player.objInstance.lockerFullName
