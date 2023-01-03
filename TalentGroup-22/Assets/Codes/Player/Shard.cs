@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using System;
 
 public class Shard : MonoBehaviour
 {  
@@ -8,15 +10,27 @@ public class Shard : MonoBehaviour
     static float lastCollectedTime = 0f;
     readonly float pauseDuration = 1f;
 
-    const string ShardSaveData = "WasDestroyed";
+    const string ShardData = "WasDestroyed";
 
     private void Start()
     {
-        if (PlayerPrefs.GetInt("CollectedSharp" + transform.position.ToString()) != 0)
-        {
-            Destroy(gameObject);
-        }
-    }
+        string WasDestroyed = PlayerPrefs.GetString(ShardData + transform.position.ToString());
+        if (WasDestroyed == "true")
+            gameObject.SetActive(false);
+       // else
+         //   gameObject.SetActive(true);
+     //   if (PlayerPrefs.GetInt("CollectedShard") != 0)
+       // {
+         //   Destroy(gameObject);
+        //}
+        /**f (PlayerPrefs.GetInt("CollectedShard")== 1)
+           {
+               
+           } else
+           {
+               DontDestroyOnLoad(gameObject);
+           } */
+    } 
 
         void OnTriggerEnter2D(Collider2D other)
         {
@@ -48,11 +62,23 @@ public class Shard : MonoBehaviour
                 AudioManager.instance.ShardSFX();
             }
 
+
         }
 
+    
         void Collect()
-        {
-            PlayerPrefs.SetInt("CollectedSharp" + transform.position.ToString(), 1);
-            Destroy(gameObject);
-        }
+    {
+        PlayerPrefs.SetString(ShardData + transform.position.ToString(), "true") ;
+        gameObject.SetActive(false);
     }
+        //PlayerPrefs.SetInt("CollectedShard", 1);
+          //  Destroy(gameObject);
+
+    public void ResetShard()
+    {
+        PlayerPrefs.DeleteKey(ShardData + transform.position.ToString());
+    }
+        }
+
+        
+    

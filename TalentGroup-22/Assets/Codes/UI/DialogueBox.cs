@@ -51,12 +51,6 @@ public class DialogueBox : MonoBehaviour
             StartCoroutine(PlayDialogue(DialogueSegments[DialogueIndex].Dialogue.Replace("playerName", (PlayerPrefs.GetString("SavedName")))));
         }
         
-        if (PlayerPrefs.GetString("SavedName") ==  nameField.text)
-        {
-            PlayerPrefs.SetInt("SavedScore", 0);
-        }
-
-
     }
 
     void SetStyle(Subject Speaker)

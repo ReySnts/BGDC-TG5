@@ -7,7 +7,8 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
-    
+    Shard shard;
+
     // Update is called once per frame
     void Update()
     {
@@ -21,7 +22,7 @@ public class PauseMenu : MonoBehaviour
                 Pause();
             }
         }
-        
+
     }
 
     public void Resume ()
@@ -40,19 +41,18 @@ public class PauseMenu : MonoBehaviour
 
     public void Restart ()
     {
+        
         Time.timeScale = 1f;
-        DeleteKey();
-        SceneManager.LoadScene("InputName");
+        PlayerPrefs.DeleteKey("SavedScore");
+        PlayerPrefs.DeleteKey("SavedScene");
+        PlayerPrefs.DeleteKey("Saved");
+        PlayerPrefs.DeleteKey("TimeToLoad");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Debug.Log("MY Score:" + PlayerPrefs.GetString("SavedName") + PlayerPrefs.GetInt("SavedScore"));
     }
     public void MenuGame()
     {
         SceneManager.LoadScene("Menu");
     }
-
-    public void DeleteKey()
-    {
-        PlayerPrefs.DeleteKey("SavedScene");
-        PlayerPrefs.DeleteKey("playerName");
-        PlayerPrefs.DeleteAll();
-    }
+    
 }

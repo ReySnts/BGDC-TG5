@@ -998,7 +998,7 @@ MonoBehaviour:
   DialogueSegments:
   - Dialogue: what is your name?
     Speaker: {fileID: 11400000, guid: e5c74acfd95f60e498d463d0b0eb2a21, type: 2}
-  - Dialogue: welcome to the wolrd, playerName! let's start the game.
+  - Dialogue: welcome to the world, playerName! let's start the game.
     Speaker: {fileID: 11400000, guid: e5c74acfd95f60e498d463d0b0eb2a21, type: 2}
   SpeakerFaceDisplay: {fileID: 1861147908}
   DialogueBoxBorder: {fileID: 202471849}
