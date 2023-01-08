@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
     public bool isCollidingEnemy = false;
     public bool isCollidingLocker = false;
     public bool isTriggeringEnemyGhost = false;
+    public bool isTriggeringPuzzle = false;
     public readonly string lockerName = "Locker";
     public string lockerFullName = null;
     readonly string enemyName = "Enemy";
@@ -86,6 +87,13 @@ public class Player : MonoBehaviour
                 == enemyGhostName
             )
             isTriggeringEnemyGhost = true;
+            if 
+            (
+                other.gameObject.name
+                ==
+                Puzzle.objInstance.triggerGameObj.name
+            ) 
+            isTriggeringPuzzle = true;
         }
         catch {}
     }
@@ -103,6 +111,14 @@ public class Player : MonoBehaviour
                 == enemyGhostName
             )
             isTriggeringEnemyGhost = false;
+            isTriggeringEnemyGhost = true;
+            if 
+            (
+                other.gameObject.name
+                ==
+                Puzzle.objInstance.triggerGameObj.name
+            ) 
+            isTriggeringPuzzle = false;
         }
         catch {}
     }

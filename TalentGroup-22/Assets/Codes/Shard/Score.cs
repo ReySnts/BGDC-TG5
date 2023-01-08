@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using TMPro;
 public class Score : MonoBehaviour
@@ -8,9 +7,8 @@ public class Score : MonoBehaviour
     public Delegate addScore = null;
     TextMeshProUGUI scoreText = null;
     readonly string scoreTextObject = "ScoreText";
-    float restartTime = 2f;
+    public readonly int maxScore = 7;
     int score = 0;
-    readonly int maxScore = 7;
     bool isMaxed = false;
     void Awake()
     {
@@ -20,7 +18,6 @@ public class Score : MonoBehaviour
     void AddScore()
     {
         score++;
-        SoundManager.objInstance.Crystal_get.Play();
     }
     void OnEnable()
     {
@@ -29,11 +26,6 @@ public class Score : MonoBehaviour
     void Start()
     {
         scoreText = GameObject.Find(scoreTextObject).GetComponent<TextMeshProUGUI>();
-    }
-    IEnumerator RestartLevel()
-    {
-        yield return new WaitForSeconds(restartTime);
-        Scene.objInstance.Restart();
     }
     void Update()
     {
@@ -45,7 +37,7 @@ public class Score : MonoBehaviour
         ) 
         {
             isMaxed = true;
-            StartCoroutine(RestartLevel());
+            Puzzle.objInstance.triggerGameObj.SetActive(true);
         }
         else scoreText.text = score.ToString();
     }
