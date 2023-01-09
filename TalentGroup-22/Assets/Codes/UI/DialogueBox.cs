@@ -19,7 +19,7 @@ public class DialogueBox : MonoBehaviour
     [Space]
     public float TextSpeed;
     public TMP_InputField nameField;
-
+   
     private int DialogueIndex;
   //  private bool CanContinue;
 
@@ -28,27 +28,28 @@ public class DialogueBox : MonoBehaviour
     {
         SetStyle(DialogueSegments[0].Speaker);
         StartCoroutine(PlayDialogue(DialogueSegments[0].Dialogue));
-        
+        AudioManager.instance.ChangeBGM();
     }
 
     // Update is called once per frame
     void Update()
     {
         //    SkipIndicator.enabled = CanContinue; && CanContinue
-        if (Input.GetKeyDown(KeyCode.Space) )
+        if (Input.GetKeyDown(KeyCode.Return) )
         { 
             DialogueIndex++;
             if (DialogueIndex == DialogueSegments.Length)
             {
-                SceneManager.LoadScene("Level-1"); 
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 //gameObject.SetActive(false);
-               
+
                 return;
                 
             }
             PlayerPrefs.SetString("SavedName", nameField.text);
             SetStyle(DialogueSegments[DialogueIndex].Speaker);
             StartCoroutine(PlayDialogue(DialogueSegments[DialogueIndex].Dialogue.Replace("playerName", (PlayerPrefs.GetString("SavedName")))));
+            
         }
         
     }

@@ -7,9 +7,20 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     const string ShardData = "WasDestroyed";
+
+    private void Start()
+    {
+        AudioManager.instance.ChangeBGM();
+    }
+
     public void NewGame() 
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+        Time.timeScale = 1f;
+        PlayerPrefs.DeleteKey("SavedScore");
+        PlayerPrefs.DeleteKey("SavedScene");
+        PlayerPrefs.DeleteKey("Saved");
+        PlayerPrefs.DeleteKey("TimeToLoad"); SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void LoadGame()

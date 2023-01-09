@@ -1,49 +1,170 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
 
+    // variable for audio
     [SerializeField] AudioMixer mixer;
-    [SerializeField] AudioSource collectionSource;
-    [SerializeField] AudioClip shardClip;
-    [SerializeField] AudioClip gameOverClip;
+    [SerializeField] AudioSource SFXSource;
+    [SerializeField] AudioSource PlayerSource;
+    [SerializeField] AudioSource ButtonSource;
+    [SerializeField] AudioSource ShardSource;
+    [SerializeField] AudioSource BGMSource;
+    [SerializeField] List<AudioClip> sfxClip = new List<AudioClip>();
+    [SerializeField] List<AudioClip> playerClip = new List<AudioClip>();
+    [SerializeField] List<AudioClip> bgmClip = new List<AudioClip>();
 
+    // vars for checking which scene has been loaded at present moment
+    private string lastScene;
+    private string currentScene;
+
+    // var for saving value
     public const string MUSIC_KEY = "musicVolume";
     public const string SFX_KEY = "sfxVolume";
 
+    // vars for checking player condition
+    private bool isWalking;
+    private bool isRunning;
+
     private void Awake()
     {
+        // getting the scenename
+        lastScene = SceneManager.GetActiveScene().name;
+
+
         if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else
-        {
-            Destroy(gameObject);
-        }
-
+        
         LoadVolume();
     }
 
+    private void Update()
+    {
+        currentScene = SceneManager.GetActiveScene().name;
+
+        if(currentScene != lastScene)
+        {
+            lastScene = currentScene;
+            ChangeBGM();
+        }
+
+        if(!SFXSource.isPlaying)
+        {
+            SFXSource.Play();
+        }
+
+    }
+    public void ButtonSFX()
+        {
+                AudioClip clip = sfxClip[1];
+                ButtonSource.PlayOneShot(clip);
+
+        }
     public void ShardSFX()
     {
-
-        collectionSource.PlayOneShot(shardClip);
-    } 
-    
-    public void GameOverSFX()
-    {
-
-        collectionSource.PlayOneShot(gameOverClip);
+         AudioClip clip = sfxClip[0];
+         ShardSource.PlayOneShot(clip);
     }
-    
+
+    public void PlayerSFX()
+    {
+        if (Input.GetAxisRaw("Vertical") != 0)
+        {
+            isWalking = true;
+            isRunning = false; 
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                isRunning = true;
+                isWalking = false;
+            }
+        } 
+        else if (Input.GetAxisRaw("Horizontal") != 0)
+        {
+            isWalking = true;
+            isRunning = false;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                isRunning = true;
+                isWalking = false;
+            }
+        }
+        else
+        {
+            isWalking = false;
+            isRunning = false;
+        }
+
+        if (isWalking && !isRunning && !PlayerSource.isPlaying)
+            {
+                WalkSFX();
+                PlayerSource.Play();
+        }
+        else if (isRunning && !isWalking && !PlayerSource.isPlaying)
+        {
+                RunSFX();
+                PlayerSource.Play();
+        }
+        else if (!isWalking && !isRunning) // if player is not moving and audiosource is playing stop it
+        {
+                PlayerSource.Stop();
+        }
+        
+    }
+    public void WalkSFX()
+    {
+        AudioClip clip = playerClip[1];
+       PlayerSource.PlayOneShot(clip);
+    }
+
+    public void RunSFX()
+    {
+        AudioClip clip = playerClip[0];
+        PlayerSource.PlayOneShot(clip);
+    }
 
 
+    public void ChangeBGM()
+    {
+        if (lastScene == "Menu")
+        {
+            BGMSource.PlayOneShot(bgmClip[0]);
+        }
+        else if (lastScene == "InputName")
+        {
+            BGMSource.Stop();
+            BGMSource.PlayOneShot(bgmClip[1]);
+        }
+        else if (lastScene == "Level-1")
+        {
+            BGMSource.Stop();
+            BGMSource.PlayOneShot(bgmClip[0]);
+        }
+        else
+        {
+            BGMSource.Stop();
+        }
+    }
 
+    public void GameOver()
+    {
+        AudioClip clip = sfxClip[2];
+        SFXSource.PlayOneShot(clip);
+    }
+
+    public void GoodEndingEffect()
+    {
+        AudioClip clip = sfxClip[3];
+        SFXSource.PlayOneShot(clip);
+    }
+        
     void LoadVolume()
     {
         float musicVolume = PlayerPrefs.GetFloat(MUSIC_KEY, 1f);

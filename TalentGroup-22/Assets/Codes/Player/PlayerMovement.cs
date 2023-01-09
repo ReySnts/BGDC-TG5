@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     PlayerManager playerPosData;
 
+
     void Awake()
     {
         if (objInstance == null) objInstance = this;
@@ -21,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
         //this playerprefs
         playerPosData = FindObjectOfType<PlayerManager>();
         playerPosData.LoadData();
+
     }
     void Start()
     {
@@ -28,25 +30,15 @@ public class PlayerMovement : MonoBehaviour
         playerAnimator = GameObject.Find(objName).GetComponent<Animator>();
     }
 
-    /**this Json
-    public void LoadData(GameData data)
-    {
-        this.transform.position = data.playerPosition;
-    }
-
-    public void SaveData(GameData data)
-    {
-        data.playerPosition = this.transform.position;
-    }
-    */
     void Update()
     {
         #region Walk
         movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        
+        movement.y = Input.GetAxisRaw("Vertical");  
         #endregion
         #region Run
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (movement.x !=0 && Input.GetKey(KeyCode.LeftShift) || movement.y != 0 && Input.GetKey(KeyCode.LeftShift))
         {
             isRunning = true;
             speed = runSpeed;
@@ -62,11 +54,19 @@ public class PlayerMovement : MonoBehaviour
         playerAnimator.SetFloat("Vertical", movement.y);
         playerAnimator.SetFloat("Speed", movement.sqrMagnitude);
         #endregion
+
+        #region Sound
+        AudioManager.instance.PlayerSFX();
+        
+        #endregion
+
     }
 
     void FixedUpdate()
     {
         playerRigidbody.MovePosition(playerRigidbody.position + movement * speed * Time.fixedDeltaTime);
+
     }
 
+    
 }

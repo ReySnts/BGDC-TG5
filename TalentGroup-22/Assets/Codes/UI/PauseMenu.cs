@@ -48,7 +48,6 @@ public class PauseMenu : MonoBehaviour
         PlayerPrefs.DeleteKey("Saved");
         PlayerPrefs.DeleteKey("TimeToLoad");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        Debug.Log("MY Score:" + PlayerPrefs.GetString("SavedName") + PlayerPrefs.GetInt("SavedScore"));
     }
     public void MenuGame()
     {

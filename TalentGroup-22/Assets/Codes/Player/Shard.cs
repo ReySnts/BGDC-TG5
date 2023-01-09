@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System;
 
 public class Shard : MonoBehaviour
-{  
+{
+    public static Shard instance;
+
     readonly string colliderName = "Player";
     bool isTriggered = false;
     static float lastCollectedTime = 0f;
@@ -17,8 +19,8 @@ public class Shard : MonoBehaviour
         string WasDestroyed = PlayerPrefs.GetString(ShardData + transform.position.ToString());
         if (WasDestroyed == "true")
             gameObject.SetActive(false);
-       // else
-         //   gameObject.SetActive(true);
+        else
+            gameObject.SetActive(true);
      //   if (PlayerPrefs.GetInt("CollectedShard") != 0)
        // {
          //   Destroy(gameObject);
