@@ -69,6 +69,8 @@ public class PlayerHealth : MonoBehaviour
             SoundManager.objInstance.Crystal_get.enabled = false;
             SoundManager.objInstance.walk.enabled = false;
             SoundManager.objInstance.run.enabled = false;
+            SoundManager.objInstance.Damaged.enabled = false;
+            SoundManager.objInstance.Explode_sound.enabled = false;
             SoundManager.objInstance.Game_over.Play();
             #endregion
             StartCoroutine

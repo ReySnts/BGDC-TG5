@@ -26,52 +26,60 @@ public class Player : MonoBehaviour
     }
     void OnCollisionStay2D(Collision2D other)
     {
-        if 
-        (
-            other.gameObject.name.Substring
-            (
-                0,
-                enemyLen
-            )
-            == enemyName
-        )
-        isCollidingEnemy = true;
-        if 
-        (
-            other.gameObject.name.Substring
-            (
-                0,
-                lockerLen
-            )
-            == lockerName
-        )
+        try
         {
-            isCollidingLocker = true;
-            lockerFullName = other.gameObject.name;
+            if 
+            (
+                other.gameObject.name.Substring
+                (
+                    0,
+                    enemyLen
+                )
+                == enemyName
+            )
+            isCollidingEnemy = true;
+            if 
+            (
+                other.gameObject.name.Substring
+                (
+                    0,
+                    lockerLen
+                )
+                == lockerName
+            )
+            {
+                isCollidingLocker = true;
+                lockerFullName = other.gameObject.name;
+            }
         }
+        catch{}
     }
     void OnCollisionExit2D(Collision2D other)
     {
-        if 
-        (
-            other.gameObject.name.Substring
+        try
+        {
+            if 
             (
-                0,
-                enemyLen
+                other.gameObject.name.Substring
+                (
+                    0,
+                    enemyLen
+                )
+                == enemyName
             )
-            == enemyName
-        )
-        isCollidingEnemy = false;
-        if 
-        (
-            other.gameObject.name.Substring
+            isCollidingEnemy = false;
+            if 
             (
-                0,
-                lockerLen
+                other.gameObject.name.Substring
+                (
+                    0,
+                    lockerLen
+                )
+                == lockerName
             )
-            == lockerName
-        )
-        isCollidingLocker = false;
+            isCollidingLocker = false;
+        }
+        catch{}
     }
     void OnTriggerStay2D(Collider2D other)
     {
@@ -111,7 +119,6 @@ public class Player : MonoBehaviour
                 == enemyGhostName
             )
             isTriggeringEnemyGhost = false;
-            isTriggeringEnemyGhost = true;
             if 
             (
                 other.gameObject.name

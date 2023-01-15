@@ -6,7 +6,6 @@ public class Score : MonoBehaviour
     public delegate void Delegate();
     public Delegate addScore = null;
     TextMeshProUGUI scoreText = null;
-    readonly string scoreTextObject = "ScoreText";
     public readonly int maxScore = 7;
     int score = 0;
     bool isMaxed = false;
@@ -25,7 +24,9 @@ public class Score : MonoBehaviour
     }
     void Start()
     {
-        scoreText = GameObject.Find(scoreTextObject).GetComponent<TextMeshProUGUI>();
+        score = PlayerPrefs.GetInt("SavedScore", 0);
+
+        scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
     }
     void Update()
     {
