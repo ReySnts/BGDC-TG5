@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        AudioManager.instance.ChangeBGM();
+      //  AudioManager.instance.ChangeBGM();
     }
 
     public void NewGame() 
@@ -20,7 +20,8 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.DeleteKey("SavedScore");
         PlayerPrefs.DeleteKey("SavedScene");
         PlayerPrefs.DeleteKey("Saved");
-        PlayerPrefs.DeleteKey("TimeToLoad"); SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        PlayerPrefs.DeleteKey("TimeToLoad"); 
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void LoadGame()

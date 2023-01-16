@@ -60,11 +60,14 @@
     <Compile Include="Assets\Codes\Scene\Load\Data.cs" />
     <Compile Include="Assets\Codes\Scene\Audio\AudioManager.cs" />
     <Compile Include="Assets\Codes\Enemy\Enemy.cs" />
+    <Compile Include="Assets\Codes\UI\Dialogue\BeforeBoss\DialogueChoices.cs" />
     <Compile Include="Assets\Codes\Scene\Load\LevelLoader.cs" />
-    <Compile Include="Assets\Codes\UI\DialogueBox.cs" />
+    <Compile Include="Assets\Ink\Demos\Basic Demo\Scripts\BasicInkExample.cs" />
+    <Compile Include="Assets\Codes\UI\Dialogue\DialogueBox.cs" />
+    <Compile Include="Assets\Ink\Demos\Basic Demo\Scripts\QuitGameOnKeypress.cs" />
     <Compile Include="Assets\Codes\Scene\Menu\VolumeSetting.cs" />
     <Compile Include="Assets\Codes\Player\PlayerManager.cs" />
-    <Compile Include="Assets\Codes\UI\Subject.cs" />
+    <Compile Include="Assets\Codes\UI\Dialogue\Subject.cs" />
     <Compile Include="Assets\Codes\Player\PlayerMovement.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />
     <Compile Include="Assets\Codes\Player\Shard.cs" />
@@ -73,6 +76,7 @@
     <Compile Include="Assets\Codes\Scene\SceneCodes.cs" />
     <Compile Include="Assets\Codes\Enemy\EnemyGhost.cs" />
     <Compile Include="Assets\Codes\UI\PauseMenu.cs" />
+    <Compile Include="Assets\Codes\UI\NaratorScene.cs" />
     <Compile Include="Assets\Codes\Scene\Menu\MainMenu.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -875,6 +879,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Ink-Libraries.csproj">
+      <Project>{00581208-22BC-81E1-FA85-5D1D4CD40801}</Project>
+      <Name>Ink-Libraries</Name>
+    </ProjectReference>
     <ProjectReference Include="PackageToolsEditor.csproj">
       <Project>{1F3C6957-EFAC-8768-3BD9-4DA201F2020F}</Project>
       <Name>PackageToolsEditor</Name>
@@ -882,6 +890,10 @@
     <ProjectReference Include="AstarPathfindingProjectEditor.csproj">
       <Project>{ACC70B02-FA5F-F1A2-1777-53467C732D35}</Project>
       <Name>AstarPathfindingProjectEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="InkEditor.csproj">
+      <Project>{0EB20CED-93CD-77AF-CDF5-19418ACAAE94}</Project>
+      <Name>InkEditor</Name>
     </ProjectReference>
     <ProjectReference Include="AstarPathfindingProject.csproj">
       <Project>{AA54E415-896E-EB7E-C5FB-833DC995C003}</Project>

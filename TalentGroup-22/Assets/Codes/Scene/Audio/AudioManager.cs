@@ -15,6 +15,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource ButtonSource;
     [SerializeField] AudioSource ShardSource;
     [SerializeField] AudioSource BGMSource;
+    [SerializeField] AudioSource DoorSource;
     [SerializeField] List<AudioClip> sfxClip = new List<AudioClip>();
     [SerializeField] List<AudioClip> playerClip = new List<AudioClip>();
     [SerializeField] List<AudioClip> bgmClip = new List<AudioClip>();
@@ -30,6 +31,8 @@ public class AudioManager : MonoBehaviour
     // vars for checking player condition
     private bool isWalking;
     private bool isRunning;
+    private bool isOpen;
+    private bool notification;
 
     private void Awake()
     {
@@ -49,13 +52,13 @@ public class AudioManager : MonoBehaviour
     private void Update()
     {
         currentScene = SceneManager.GetActiveScene().name;
-
+        /**
         if(currentScene != lastScene)
         {
             lastScene = currentScene;
             ChangeBGM();
         }
-
+        */
         if(!SFXSource.isPlaying)
         {
             SFXSource.Play();
@@ -118,6 +121,36 @@ public class AudioManager : MonoBehaviour
         }
         
     }
+
+    public void DoorSFX()
+    {
+        if (PlayerPrefs.GetInt("SavedScore") == 7)
+        {
+            isOpen = false;
+            notification = true;
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                notification = false;
+                isOpen = true;
+            }
+        }
+        else
+        {
+            notification = false;
+            isOpen = false;
+        }
+
+        if (!isOpen && notification && !DoorSource.isPlaying)
+        {
+            NotifDoor();
+        }
+        else if (isOpen && !notification && !DoorSource.isPlaying)
+        {
+            DoorSource.Stop();
+            DoorOpen();
+        }
+
+    }
     public void WalkSFX()
     {
         AudioClip clip = playerClip[1];
@@ -130,27 +163,52 @@ public class AudioManager : MonoBehaviour
         PlayerSource.PlayOneShot(clip);
     }
 
+    public void NotifDoor()
+    {
+        AudioClip clip = sfxClip[4];
+        DoorSource.PlayOneShot(clip);
+    }
+    public void DoorOpen()
+    {
+        AudioClip clip = sfxClip[5];
+        DoorSource.PlayOneShot(clip);
+    }
+
+   
 
     public void ChangeBGM()
     {
         if (lastScene == "Menu")
         {
-            BGMSource.PlayOneShot(bgmClip[0]);
+            BGMSource.loop = true;
+            BGMSource.clip = bgmClip[0];
+            BGMSource.Play();
         }
-        else if (lastScene == "InputName")
+        else if (lastScene == "NaratorScreen")
+        { 
+                BGMSource.Stop();
+                BGMSource.loop = true;
+                BGMSource.clip = bgmClip[1];
+                BGMSource.Play();
+            DontDestroyOnLoad(gameObject);
+        } else if (lastScene == "InputName")
         {
-            BGMSource.Stop();
-            BGMSource.PlayOneShot(bgmClip[1]);
+            BGMSource.Pause();
+        //    BGMSource.loop = true;
+          //  BGMSource.clip = bgmClip[1];
+            BGMSource.UnPause();
         }
         else if (lastScene == "Level-1")
         {
             BGMSource.Stop();
-            BGMSource.PlayOneShot(bgmClip[0]);
-        }
-        else
+            BGMSource.loop = true;
+            BGMSource.clip = bgmClip[2];
+            BGMSource.Play();
+        } else
         {
             BGMSource.Stop();
         }
+      
     }
 
     public void GameOver()

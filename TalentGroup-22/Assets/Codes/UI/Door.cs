@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    /**
-    readonly string colliderName = "Player";
-    bool isTriggered = false;
-    static float lastCollectedTime = 0f;
-    readonly float pauseDuration = 1f;
-    */
+    bool isOpen;
+    bool notification;
 
     // Start is called before the first frame update
     void Start()
@@ -20,31 +16,16 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        AudioManager.instance.DoorSFX();
         if (PlayerPrefs.GetInt("SavedScore") == 7 && Input.GetKeyDown(KeyCode.F))
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 5.0f);
+        } else
+        {                DontDestroyOnLoad(gameObject);
         }
+        
     }
 
-   /** void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.name == colliderName)
-        {
-            if (Time.time - lastCollectedTime < pauseDuration) return;
-            else
-            {
-
-                lastCollectedTime = Time.time;
-                isTriggered = true;
-            }
-        }
-
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.name == colliderName) isTriggered = false;
-    }
-   */
     
+
 }
