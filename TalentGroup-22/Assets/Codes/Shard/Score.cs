@@ -17,6 +17,11 @@ public class Score : MonoBehaviour
     void AddScore()
     {
         score++;
+        PlayerPrefs.SetInt
+        (
+            "SavedScore", 
+            score
+        );
     }
     void OnEnable()
     {
@@ -24,8 +29,11 @@ public class Score : MonoBehaviour
     }
     void Start()
     {
-        score = PlayerPrefs.GetInt("SavedScore", 0);
-
+        score = PlayerPrefs.GetInt
+        (
+            "SavedScore", 
+            0
+        );
         scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
     }
     void Update()
@@ -41,9 +49,5 @@ public class Score : MonoBehaviour
             Puzzle.objInstance.triggerGameObj.SetActive(true);
         }
         else scoreText.text = score.ToString();
-    }
-    void OnDisable()
-    {
-        addScore -= AddScore;
     }
 }

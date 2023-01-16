@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - GameMusic
+  - Door
   layers:
   - Default
   - TransparentFX
@@ -11,7 +13,7 @@ TagManager:
   - 
   - Water
   - UI
-  - Wall
+  - Maze
   - Locker
   - 
   - 
@@ -41,6 +43,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
-    uniqueID: 1418953255
+  - name: Background
+    uniqueID: 3807350437
     locked: 0

@@ -10,19 +10,14 @@ public class PlayerMovement : MonoBehaviour
     bool isRunning = false;
     bool isWalking = false;
     Vector2 movement = Vector2.zero;
-    
     PlayerManager playerPosData;
-
-    
     void Awake()
     {
         if (objInstance == null) objInstance = this;
         else if (objInstance != this) Destroy(gameObject);
-
         //this playerprefs
         playerPosData = FindObjectOfType<PlayerManager>();
         playerPosData.LoadData();
-
     }
     void Start()
     {
