@@ -7,51 +7,43 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
-    Shard shard;
-
-    // Update is called once per frame
     void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.Escape)))
+        if 
+        (
+            Input.GetKeyDown(KeyCode.Escape)
+        )
         {
-            if (GameIsPaused)
-            {
-                Resume();
-            } else
-            {
-                Pause();
-            }
+            if (GameIsPaused) Resume();
+            else Pause();
         }
-
     }
-
-    public void Resume ()
+    public void Resume()
     {
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
     }
-
-    public void Pause ()
+    public void Pause()
     {
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
     }
-
-    public void Restart ()
+    public void Restart()
     {
-        
         Time.timeScale = 1f;
         PlayerPrefs.DeleteKey("SavedScore");
         PlayerPrefs.DeleteKey("SavedScene");
         PlayerPrefs.DeleteKey("Saved");
         PlayerPrefs.DeleteKey("TimeToLoad");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene
+        (
+            SceneManager.GetActiveScene().buildIndex
+        );
     }
     public void MenuGame()
     {
         SceneManager.LoadScene("Menu");
     }
-    
 }

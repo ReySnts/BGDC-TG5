@@ -45,10 +45,8 @@ public class AudioManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        
         LoadVolume();
     }
-
     private void Update()
     {
         currentScene = SceneManager.GetActiveScene().name;
@@ -59,24 +57,22 @@ public class AudioManager : MonoBehaviour
             ChangeBGM();
         }
         */
-        if(!SFXSource.isPlaying)
+        if (!SFXSource.isPlaying)
         {
             SFXSource.Play();
         }
 
     }
     public void ButtonSFX()
-        {
-                AudioClip clip = sfxClip[1];
-                ButtonSource.PlayOneShot(clip);
-
-        }
+    {
+        AudioClip clip = sfxClip[1];
+        ButtonSource.PlayOneShot(clip);
+    }
     public void ShardSFX()
     {
          AudioClip clip = sfxClip[0];
          ShardSource.PlayOneShot(clip);
     }
-
     public void PlayerSFX()
     {
         if (Input.GetAxisRaw("Vertical") != 0)
