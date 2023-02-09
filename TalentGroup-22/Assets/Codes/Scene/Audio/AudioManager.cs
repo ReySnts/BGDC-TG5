@@ -16,6 +16,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource ShardSource;
     [SerializeField] AudioSource BGMSource;
     [SerializeField] AudioSource DoorSource;
+    [SerializeField] AudioSource MainSource;
     [SerializeField] List<AudioClip> sfxClip = new List<AudioClip>();
     [SerializeField] List<AudioClip> playerClip = new List<AudioClip>();
     [SerializeField] List<AudioClip> bgmClip = new List<AudioClip>();
@@ -34,6 +35,11 @@ public class AudioManager : MonoBehaviour
     private bool isOpen;
     private bool notification;
 
+    private void Start()
+    {
+        ChangeBGM();
+    }
+
     private void Awake()
     {
         // getting the scenename
@@ -50,13 +56,13 @@ public class AudioManager : MonoBehaviour
     private void Update()
     {
         currentScene = SceneManager.GetActiveScene().name;
-        /**
+        
         if(currentScene != lastScene)
         {
             lastScene = currentScene;
             ChangeBGM();
         }
-        */
+        
         if (!SFXSource.isPlaying)
         {
             SFXSource.Play();
@@ -180,27 +186,43 @@ public class AudioManager : MonoBehaviour
             BGMSource.clip = bgmClip[0];
             BGMSource.Play();
         }
-        else if (lastScene == "NaratorScreen")
-        { 
-                BGMSource.Stop();
-                BGMSource.loop = true;
-                BGMSource.clip = bgmClip[1];
-                BGMSource.Play();
-            DontDestroyOnLoad(gameObject);
-        } else if (lastScene == "InputName")
+        else if (lastScene == "InputName")
         {
-            BGMSource.Pause();
-        //    BGMSource.loop = true;
-          //  BGMSource.clip = bgmClip[1];
-            BGMSource.UnPause();
+            BGMSource.Stop();
+            BGMSource.loop = true;
+            BGMSource.clip = bgmClip[1];
+            BGMSource.Play();
         }
         else if (lastScene == "Level-1")
         {
             BGMSource.Stop();
+            MainSource.Stop();
+            MainSource.loop = true;
+            MainSource.clip = bgmClip[2];
+            MainSource.Play();
+        }
+        else if (lastScene == "DialogueBeforeBoss")
+        {
+            MainSource.Stop();
+            BGMSource.Stop();
             BGMSource.loop = true;
-            BGMSource.clip = bgmClip[2];
+            BGMSource.clip = bgmClip[1];
             BGMSource.Play();
-        } else
+        }
+        else if (lastScene == "GoodEnding")
+        {
+            BGMSource.Stop();
+            BGMSource.loop = true;
+            BGMSource.clip = bgmClip[5];
+            BGMSource.Play();
+        }else if (lastScene == "BadEnding")
+        {
+            BGMSource.Stop();
+            BGMSource.loop = false;
+            BGMSource.clip = bgmClip[4];
+            BGMSource.Play();
+        }
+        else
         {
             BGMSource.Stop();
         }

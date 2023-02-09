@@ -1,44 +1,50 @@
 EXTERNAL Name(charName)
 EXTERNAL Icon(charName)
 
-{Name("Mom")}
-{Icon("Dialogue - Guide")}
+{Name("Guide")}
+{Icon("Dialogue - Guide (1)")}
 Now that you've recovered some of your memories, do you remember me?
 {Name("")}
-{Icon("Dialogue - MC")}
+{Icon("Dialogue - MC (1)")}
 ...
 ...
 ..!
-mom..?
+Mom..?
 {Name("Mom")}
-{Icon("Dialogue - Guide")}
+{Icon("Dialogue - Mom (1)")}
 Come, my child.
 Come closer.
 Stay with me.
+{Name("")}
+{Icon("Blank")}
+Stay With Mom? 
 * [YES]
     -> BadEnding
 * [NO]
     {Name("Mom")}
-    {Icon("Dialogue - Guide")}
+    {Icon("Dialogue - Mom (1)")}
     Why not, my child?
     Do you not trust me?
+    {Name("")}
+    {Icon("Blank")}
+    Stay With Mom?
     ** [YES]
         -> BadEnding
     ** [NO]
         {Name("Mom")}
-        {Icon("Dialogue - Guide")}
+        {Icon("Dialogue - Mom (1)")}
         Please stay with me, my child.
         I will protect you, you will be safe here with me.
+        {Name("")}
+        {Icon("Blank")}
+        Stay With Mom?
         *** [YES]
             -> BadEnding
         *** [NO]
             {Name("Mom")}
-            {Icon("Dialogue - Guide")}
-            You leave me no choice then.
-            If I can't convince you, then I'll have to make you stay.
-            Be not afraid, my child.
-            This is for your own good.
-            -> GoodEnding
+            {Icon("CG - Real Mom")}
+            You'll regret your decision!
+            ->GoodEnding
 
 = BadEnding
     -> END

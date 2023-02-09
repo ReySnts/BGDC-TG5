@@ -2,6 +2,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement objInstance = null;
+    readonly string objName = "Player";
     Rigidbody2D playerRigidbody = null;
     Animator playerAnimator = null;
     float speed = 0f;
@@ -21,8 +22,12 @@ public class PlayerMovement : MonoBehaviour
     }
     void Start()
     {
-        playerRigidbody = Player.objInstance.gameObject.GetComponent<Rigidbody2D>();
-        playerAnimator = Player.objInstance.gameObject.GetComponent<Animator>();
+        playerRigidbody = GameObject.Find("Player").GetComponent<Rigidbody2D>();
+        playerAnimator = GameObject.Find("Player").GetComponent<Animator>();
+        //  playerRigidbody = GameObject.Find(objName).GetComponent<Rigidbody2D>();
+        //  playerAnimator = GameObject.Find(objName).GetComponent<Animator>();
+       // playerRigidbody = Player.objInstance.gameObject.GetComponent<Rigidbody2D>();
+       // playerAnimator = Player.objInstance.gameObject.GetComponent<Animator>();
     }
     void Update()
     {
@@ -49,8 +54,8 @@ public class PlayerMovement : MonoBehaviour
                     #region Run
                     isRunning = true;
                     speed = runSpeed;
-                    SoundManager.objInstance.walk.enabled = false;
-                    SoundManager.objInstance.run.enabled = true;
+                 //   SoundManager.objInstance.walk.enabled = false;
+                   // SoundManager.objInstance.run.enabled = true;
                     #endregion
                 }
             }
@@ -64,8 +69,8 @@ public class PlayerMovement : MonoBehaviour
                 #region Walk
                 isWalking = true;
                 speed = normalSpeed;
-                SoundManager.objInstance.run.enabled = false;
-                SoundManager.objInstance.walk.enabled = true;
+           //     SoundManager.objInstance.run.enabled = false;
+           //     SoundManager.objInstance.walk.enabled = true;
                 #endregion
             }
         }
@@ -74,12 +79,12 @@ public class PlayerMovement : MonoBehaviour
             if (isWalking) 
             {
                 isWalking = false;
-                SoundManager.objInstance.walk.enabled = false;
+             //   SoundManager.objInstance.walk.enabled = false;
             }
             if (isRunning) 
             {
                 isRunning = false;
-                SoundManager.objInstance.run.enabled = false;
+             //   SoundManager.objInstance.run.enabled = false;
             }
             movement = Vector2.zero;
         }
@@ -99,6 +104,10 @@ public class PlayerMovement : MonoBehaviour
             "Speed", 
             movement.sqrMagnitude
         );
+        #endregion
+
+        #region Set Audio
+        AudioManager.instance.PlayerSFX();
         #endregion
     }
     void FixedUpdate()

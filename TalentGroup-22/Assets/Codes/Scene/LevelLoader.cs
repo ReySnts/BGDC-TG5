@@ -5,18 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
-    public Animator transition = null;
-    float transitionTime = 1f;
-    IEnumerator LoadLevel(int LevelIndex)
+    public Animator TextAnim;
+    // Start is called before the first frame update
+    void Start()
     {
-        transition.SetTrigger("Start");
-
-        yield return new WaitForSeconds(transitionTime);
-
-        SceneManager.LoadScene(LevelIndex);
+        StartCoroutine(Fading());
     }
-    public void LoadNextLevel()
+
+    IEnumerator Fading()
     {
-        StartCoroutine(LoadLevel(1));
+        yield return new WaitForSeconds(3);
+
+        TextAnim.SetTrigger("fade");
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
     }
 }

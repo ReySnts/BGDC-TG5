@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 public class Score : MonoBehaviour
 {
@@ -8,10 +10,9 @@ public class Score : MonoBehaviour
     TextMeshProUGUI scoreText = null;
     public readonly int maxScore = 7;
     int score = 0;
-<<<<<<<< HEAD:TalentGroup-22/Assets/Codes/Player/Score.cs
-========
     bool isMaxed = false;
->>>>>>>> rey:TalentGroup-22/Assets/Codes/Shard/Score.cs
+    float restartTime = 5.0f;
+    
     void Awake()
     {
         if (objInstance == null) objInstance = this;
@@ -21,16 +22,13 @@ public class Score : MonoBehaviour
     public void AddScore()
     {
         score++;
-<<<<<<<< HEAD:TalentGroup-22/Assets/Codes/Player/Score.cs
         PlayerPrefs.SetInt("SavedScore", score);
         
-========
         PlayerPrefs.SetInt
         (
             "SavedScore", 
             score
         );
->>>>>>>> rey:TalentGroup-22/Assets/Codes/Shard/Score.cs
     }
     void OnEnable()
     {
@@ -38,7 +36,6 @@ public class Score : MonoBehaviour
     }
     void Start()
     {
-<<<<<<<< HEAD:TalentGroup-22/Assets/Codes/Player/Score.cs
         score = PlayerPrefs.GetInt("SavedScore", 0);
 
         scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
@@ -50,34 +47,28 @@ public class Score : MonoBehaviour
     }
     void Update()
     {
-        scoreText.text = score.ToString();
-    }
-
-    void OnDisable()
-    {
-        addScore -= AddScore;
-    }
-========
         score = PlayerPrefs.GetInt
         (
-            "SavedScore", 
+            "SavedScore",
             0
         );
         scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
-    }
-    void Update()
-    {
-        if 
+        scoreText.text = score.ToString();
+        if
         (
-            !isMaxed 
-            && 
+            !isMaxed
+            &&
             score >= maxScore
-        ) 
+        )
         {
             isMaxed = true;
             Puzzle.objInstance.triggerGameObj.SetActive(true);
         }
         else scoreText.text = score.ToString();
     }
->>>>>>>> rey:TalentGroup-22/Assets/Codes/Shard/Score.cs
+
+    void OnDisable()
+    {
+        addScore -= AddScore;
+    }
 }

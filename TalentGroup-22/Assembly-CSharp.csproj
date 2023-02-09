@@ -56,28 +56,42 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Codes\Player\Score.cs" />
+    <Compile Include="Assets\Codes\Shard\ShardSlot.cs" />
+    <Compile Include="Assets\Codes\Scene\SceneCodes.cs" />
+    <Compile Include="Assets\Codes\UI\GoodEnding.cs" />
+    <Compile Include="Assets\Codes\NPC\AI\EnemyAI.cs" />
     <Compile Include="Assets\Codes\Scene\Load\Data.cs" />
-    <Compile Include="Assets\Codes\Scene\Audio\AudioManager.cs" />
-    <Compile Include="Assets\Codes\Enemy\Enemy.cs" />
-    <Compile Include="Assets\Codes\UI\Dialogue\BeforeBoss\DialogueChoices.cs" />
-    <Compile Include="Assets\Codes\Scene\Load\LevelLoader.cs" />
-    <Compile Include="Assets\Ink\Demos\Basic Demo\Scripts\BasicInkExample.cs" />
     <Compile Include="Assets\Codes\UI\Dialogue\DialogueBox.cs" />
-    <Compile Include="Assets\Ink\Demos\Basic Demo\Scripts\QuitGameOnKeypress.cs" />
-    <Compile Include="Assets\Codes\Scene\Menu\VolumeSetting.cs" />
     <Compile Include="Assets\Codes\Player\PlayerManager.cs" />
-    <Compile Include="Assets\Codes\UI\Dialogue\Subject.cs" />
+    <Compile Include="Assets\Codes\Player\PlayerHealth.cs" />
+    <Compile Include="Assets\Codes\NPC\Enemy.cs" />
+    <Compile Include="Assets\Codes\UI\BadEnding.cs" />
+    <Compile Include="Assets\Codes\Scene\Scene.cs" />
     <Compile Include="Assets\Codes\Player\PlayerMovement.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />
-    <Compile Include="Assets\Codes\Player\Shard.cs" />
-    <Compile Include="Assets\Codes\Enemy\EnemyAI.cs" />
-    <Compile Include="Assets\Codes\UI\Door.cs" />
-    <Compile Include="Assets\Codes\Scene\SceneCodes.cs" />
-    <Compile Include="Assets\Codes\Enemy\EnemyGhost.cs" />
-    <Compile Include="Assets\Codes\UI\PauseMenu.cs" />
-    <Compile Include="Assets\Codes\UI\NaratorScene.cs" />
+    <Compile Include="Assets\Codes\NPC\AI\EnemyAIPatrol.cs" />
+    <Compile Include="Assets\Codes\Player\Player.cs" />
+    <Compile Include="Assets\Codes\Shard\ShardArrange.cs" />
+    <Compile Include="Assets\Codes\Shard\Puzzle.cs" />
     <Compile Include="Assets\Codes\Scene\Menu\MainMenu.cs" />
+    <Compile Include="Assets\Codes\NPC\Ghost\EnemyGhost.cs" />
+    <Compile Include="Assets\Codes\Player\Score.cs" />
+    <Compile Include="Assets\Codes\NPC\Ghost\Boss\EnemyGhostBoss.cs" />
+    <Compile Include="Assets\Codes\Scene\LevelLoader.cs" />
+    <Compile Include="Assets\Codes\Scene\Audio\AudioManager.cs" />
+    <Compile Include="Assets\Codes\UI\Dialogue\BeforeBoss\DialogueChoices.cs" />
+    <Compile Include="Assets\Codes\NPC\Ghost\Boss\Splash.cs" />
+    <Compile Include="Assets\Ink\Demos\Basic Demo\Scripts\BasicInkExample.cs" />
+    <Compile Include="Assets\Ink\Demos\Basic Demo\Scripts\QuitGameOnKeypress.cs" />
+    <Compile Include="Assets\Codes\Scene\Menu\VolumeSetting.cs" />
+    <Compile Include="Assets\Codes\Scene\Audio\SoundManager.cs" />
+    <Compile Include="Assets\Codes\Shard\ShardCollect.cs" />
+    <Compile Include="Assets\Codes\UI\Dialogue\Subject.cs" />
+    <Compile Include="Assets\Codes\Player\Shard.cs" />
+    <Compile Include="Assets\Codes\UI\Door.cs" />
+    <Compile Include="Assets\Codes\NPC\AI\AI.cs" />
+    <Compile Include="Assets\Codes\UI\PauseMenu.cs" />
+    <Compile Include="Assets\Codes\Player\PlayerHide.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Package\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -772,6 +786,9 @@
     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.SpatialTracking">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -790,11 +807,23 @@
     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.XR.Management">
+      <HintPath>Library\ScriptAssemblies\Unity.XR.Management.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Mathematics.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.HighDefinition.Config.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.HighDefinition.Config.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.Common.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Common.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Extras">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Animation.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Animation.Editor.dll</HintPath>
@@ -811,6 +840,12 @@
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.XR.Management.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.XR.Management.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Timeline">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
     </Reference>
@@ -819,6 +854,9 @@
     </Reference>
     <Reference Include="Unity.Burst.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.HighDefinition.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.HighDefinition.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
@@ -829,11 +867,17 @@
     <Reference Include="Unity.InternalAPIEditorBridge.001">
       <HintPath>Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.HighDefinition.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.HighDefinition.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PlasticSCM.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Extras.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Services.Core">
       <HintPath>Library\ScriptAssemblies\Unity.Services.Core.dll</HintPath>
@@ -850,6 +894,9 @@
     <Reference Include="Unity.RenderPipelines.Universal.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.XR.LegacyInputHelpers">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Services.Core.Environments">
       <HintPath>Library\ScriptAssemblies\Unity.Services.Core.Environments.dll</HintPath>
     </Reference>
@@ -865,11 +912,17 @@
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.XR.LegacyInputHelpers">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.Common.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Common.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.SpriteShape.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.SpriteShape.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.SpatialTracking">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>

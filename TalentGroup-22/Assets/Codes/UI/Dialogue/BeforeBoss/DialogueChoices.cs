@@ -14,8 +14,12 @@ public class DialogueChoices : MonoBehaviour
 
     public TMP_Text dialogueBox;
     public TMP_Text nameTag;
+    public TextMeshProUGUI displayDialog;
+
+    public TextSegments[] textSegment;
 
     public Image characterIcon;
+    public Image realMom;
 
     [SerializeField]
     private GridLayoutGroup choiceHolder;
@@ -24,17 +28,21 @@ public class DialogueChoices : MonoBehaviour
     private Button choiceBasePrefab;
 
     private float typingSpeed = 0.04f;
+    private float textSpeed = 25f;
     private bool canContinueToNextLine = false;
+    public Button continueButton;
     void Start()
     {
         LoadStory();
+        realMom.gameObject.SetActive(false);
+        displayDialog.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        if (canContinueToNextLine && Input.GetKeyDown(KeyCode.Return))
+        if (canContinueToNextLine)
         {
-            DisplayNextLine();
+            continueButton.gameObject.SetActive(true);
         }
     }
 
@@ -51,6 +59,7 @@ public class DialogueChoices : MonoBehaviour
 
     public void DisplayNextLine()
     {
+        continueButton.gameObject.SetActive(false);
         if (_StoryScript.canContinue) // Checking if there is content to go through
         {
             string text = _StoryScript.Continue(); //Gets Next Line
@@ -64,9 +73,8 @@ public class DialogueChoices : MonoBehaviour
             DisplayChoices();
         }
         else
-        { 
-            SceneManager.LoadScene("BossFight");
-            
+        {
+            SceneManager.LoadScene("GoodEnding");
         }
     }
 
@@ -113,21 +121,23 @@ public class DialogueChoices : MonoBehaviour
 
     void OnClickChoiceButton(Choice choice)
     {
-        if ( canContinueToNextLine)
+        if (canContinueToNextLine)
         {
             _StoryScript.ChooseChoiceIndex(choice.index);
             RefreshChoiceView();
             DisplayNextLine();
 
-            if (choice.index == 0) //YES CHOICE
+            if (choice.index == 0)//YES CHOICE
             {
-                SceneManager.LoadScene("BadEnding");
-                gameObject.SetActive(false);
+                canContinueToNextLine = false;
+                realMom.gameObject.SetActive(true);
+                displayDialog.gameObject.SetActive(true);
+                StartCoroutine(BadEndDialog(textSegment[0].Dialogue));
             }
         }
         
 
-        
+
     }
 
     void RefreshChoiceView()
@@ -153,5 +163,25 @@ public class DialogueChoices : MonoBehaviour
         characterIcon.sprite = Resources.Load<Sprite>("CharacterIcons/" + charName);
     }
 
+    IEnumerator BadEndDialog(string Dialogue)
+    {
+        displayDialog.SetText(string.Empty);
+        for (int i = 0; i < Dialogue.Length; i++)
+        {
+            displayDialog.text += Dialogue[i];
+            yield return new WaitForSeconds(1 / textSpeed);
+        }
+        StartCoroutine(BadEndScene());
+    }
+    IEnumerator BadEndScene()
+    {
+        yield return new WaitForSeconds(10/textSpeed);
+        SceneManager.LoadScene("BadEnding");
+    }
+}
 
+[System.Serializable]
+public class TextSegments
+{
+    public string Dialogue;
 }

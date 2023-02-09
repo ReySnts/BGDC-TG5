@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-      //  AudioManager.instance.ChangeBGM();
+      // AudioManager.instance.ChangeBGM();
     }
 
     public void NewGame() 
