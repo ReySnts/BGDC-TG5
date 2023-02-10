@@ -3,9 +3,10 @@ public class Puzzle : MonoBehaviour
 {
     public static Puzzle objInstance = null;
     public GameObject triggerGameObj = null;
-    GameObject uIGameObj = null;
-    bool isStarted = false;
-    bool isSolved = false;
+    public GameObject uIGameObj = null;
+    public bool isStarted = false;
+    public bool isSolved = false;
+    const string PuzzleData = "IsPuzzleSolved";
     void Awake()
     {
         if (objInstance == null) objInstance = this;
@@ -20,26 +21,26 @@ public class Puzzle : MonoBehaviour
     }
     void Update() 
     {
-        if 
-        (
-            !isSolved
-            &&
-            ShardSlot.correctCoordinates.Count == Score.objInstance.maxScore
-        )
+        if (!isSolved)
         {
+            if 
+            (
+                ShardSlot.correctCoordinates.Count 
+                == 
+                Score.objInstance.maxScore
+            )
             isSolved = true;
-            Scene.objInstance.Restart();
-        }
-        if 
-        (
-            Player.objInstance.isTriggeringPuzzle 
-            && 
-            Input.GetKeyDown(KeyCode.E)
-        ) 
-        {
-            if (!isStarted) isStarted = true;
-            else isStarted = false;
-            uIGameObj.SetActive(isStarted);
+            else if 
+            (
+                Player.objInstance.isTriggeringPuzzle 
+                && 
+                Input.GetKeyDown(KeyCode.E)
+            )
+            {
+                if (!isStarted) isStarted = true;
+                else isStarted = false;
+                uIGameObj.SetActive(isStarted);
+            }
         }
     }
 }

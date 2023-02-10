@@ -23,12 +23,9 @@ public class Score : MonoBehaviour
             score
         );
     }
-    void OnEnable()
-    {
-        addScore += AddScore;
-    }
     void Start()
     {
+        addScore += AddScore;
         score = PlayerPrefs.GetInt
         (
             "SavedScore", 
@@ -49,5 +46,9 @@ public class Score : MonoBehaviour
             Puzzle.objInstance.triggerGameObj.SetActive(true);
         }
         else scoreText.text = score.ToString();
+    }
+    void OnDisable()
+    {
+        addScore -= AddScore;
     }
 }

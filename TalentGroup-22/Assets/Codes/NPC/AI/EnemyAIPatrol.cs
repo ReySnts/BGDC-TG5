@@ -1,7 +1,7 @@
 using UnityEngine;
 public class EnemyAIPatrol : EnemyAI
 {
-    public Vector2[] patrolPositions = new Vector2[4];
+    public Vector2[] patrolPositions = new Vector2[]{};
     bool hasReachedPatrolPosition = false;
     int patrolIndex = 0;
     protected override void Patrol()

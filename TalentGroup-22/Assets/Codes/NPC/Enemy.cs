@@ -8,7 +8,7 @@ public abstract class Enemy : MonoBehaviour
     protected float maxRange = 5f;
     protected float speed = 0f;
     float aISpeed = 300f;
-    float ghostSpeed = 3f;
+    float ghostSpeed = 1.5f;
     float bossSpeed = 0.3f;
     float minClamp = -1f;
     float maxClamp = 1f;

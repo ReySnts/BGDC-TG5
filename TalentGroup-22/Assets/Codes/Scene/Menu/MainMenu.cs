@@ -1,40 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-
-public class MainMenu : MonoBehaviour
+public class MainMenu : Menu
 {
     const string ShardData = "WasDestroyed";
-
-    private void Start()
+    string mainMenu = "MainMenu";
+    string settingsMenu = "SettingsMenu";
+    public void OpenMenu()
     {
-      //  AudioManager.instance.ChangeBGM();
+        foreach (GameObject menu in menus) 
+        {
+            if (menu.name == mainMenu) menu.SetActive(true);
+            else menu.SetActive(false);
+        }
     }
-
+    public override void RegisterMenu()
+    {
+        menus.Add
+        (
+            GameObject.Find(mainMenu)
+        );
+        menus.Add
+        (
+            GameObject.Find(settingsMenu)
+        );
+    }
+    void Start()
+    {
+        OpenMenu();
+    }
     public void NewGame() 
     {
-
         Time.timeScale = 1f;
         PlayerPrefs.DeleteKey("SavedScore");
         PlayerPrefs.DeleteKey("SavedScene");
         PlayerPrefs.DeleteKey("Saved");
         PlayerPrefs.DeleteKey("TimeToLoad"); 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        Scene.objInstance.StartNewGame();
     }
-
     public void LoadGame()
     {
-        PlayerPrefs.SetString(ShardData, "true");
-        SceneManager.LoadScene(PlayerPrefs.GetInt("SavedScene"));
+        try
+        {
+            PlayerPrefs.SetString(ShardData, "true");
+            Scene.objInstance.Load();
+        }
+        catch{}
     }
-
-
+    public void OpenSettings()
+    {
+        foreach (GameObject menu in menus) 
+        {
+            if (menu.name == settingsMenu) menu.SetActive(true);
+            else menu.SetActive(false);
+        }
+    }
     public void QuitGame()
     {
         Application.Quit();
-
     }
-
 }
