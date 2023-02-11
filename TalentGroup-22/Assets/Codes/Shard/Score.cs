@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 public class Score : MonoBehaviour
 {
@@ -9,14 +11,19 @@ public class Score : MonoBehaviour
     public readonly int maxScore = 7;
     int score = 0;
     bool isMaxed = false;
+    float restartTime = 5.0f;
+    
     void Awake()
     {
         if (objInstance == null) objInstance = this;
         else if (objInstance != this) Destroy(gameObject);
     }
-    void AddScore()
+
+    public void AddScore()
     {
         score++;
+        PlayerPrefs.SetInt("SavedScore", score);
+        
         PlayerPrefs.SetInt
         (
             "SavedScore", 
@@ -33,14 +40,26 @@ public class Score : MonoBehaviour
         );
         scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
     }
+    IEnumerator RestartLevel()
+    {
+        yield return new WaitForSeconds(restartTime);
+        SceneLevel_1.objInstance.Restart();
+    }
     void Update()
     {
-        if 
+        score = PlayerPrefs.GetInt
         (
-            !isMaxed 
-            && 
+            "SavedScore",
+            0
+        );
+        scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
+        scoreText.text = score.ToString();
+        if
+        (
+            !isMaxed
+            &&
             score >= maxScore
-        ) 
+        )
         {
             isMaxed = true;
             Puzzle.objInstance.triggerGameObj.SetActive(true);

@@ -3,29 +3,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class Scene : MonoBehaviour
 {
-    public static Scene objInstance = null;
     protected List<GameObject> gameObjects = new List<GameObject>();
     protected virtual void RegisterGameObject(){}
-    protected void Awake()
+    protected virtual void DisableCertainConditions(){}
+    public virtual void EnableAllGameObject()
     {
-        objInstance ??= this;
-        if (objInstance != gameObject) Destroy(gameObject);
-        else RegisterGameObject();
+        foreach (GameObject gameObj in gameObjects) gameObj.SetActive(true);
     }
-    protected void DisableAllGameObject()
+    public void DisableAllGameObject()
     {
         foreach (GameObject gameObj in gameObjects) gameObj.SetActive(false);
-    }
-    public void StartNewGame()
-    {
-        SceneManager.LoadScene(1);
-    }
-    public void Load()
-    {
-        SceneManager.LoadScene
-        (
-            PlayerPrefs.GetInt("SavedScene")
-        );
     }
     public void Restart()
     {

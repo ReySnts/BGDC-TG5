@@ -26,7 +26,7 @@ public class Splash : MonoBehaviour
             {
                 hasHitPlayer = true;
                 PlayerHealth.objInstance.currentHealth -= damageAmount;
-                SoundManager.objInstance.Explode_sound.Play();
+                // SoundManager.objInstance.Explode_sound.Play();
                 Destroy(gameObject);
             }
         }

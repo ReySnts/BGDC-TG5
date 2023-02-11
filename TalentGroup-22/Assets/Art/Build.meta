@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:TalentGroup-22/Assets/Art/Build.meta
 guid: a6978468fff1b074fb9a6809f2520d72
 folderAsset: yes
+========
+guid: cb67edc1800c2ec4ba8dfb1cf0dfc84a
+>>>>>>>> elita:TalentGroup-22/Library/PackageCache/com.unity.ide.visualstudio@2.0.16/Editor/COMIntegration/Release/COMIntegration.exe.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

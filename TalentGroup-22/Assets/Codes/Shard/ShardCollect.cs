@@ -28,38 +28,30 @@ public class ShardCollect : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        try
+        if 
+        (
+            Player.objInstance.gameObject != null 
+            && 
+            other.name == Player.objInstance.gameObject.name
+        ) 
         {
-            if 
-            (
-                other.name 
-                == 
-                Player.objInstance.gameObject.name
-            ) 
+            if (Time.time - lastCollectedTime < pauseDuration) return;
+            else 
             {
-                if (Time.time - lastCollectedTime < pauseDuration) return;
-                else 
-                {
-                    lastCollectedTime = Time.time;
-                    isTriggered = true;
-                }
+                lastCollectedTime = Time.time;
+                isTriggered = true;
             }
         }
-        catch{}
     }
     void OnTriggerExit2D(Collider2D other)
     {
-        try
-        {
-            if 
-            (
-                other.name 
-                == 
-                Player.objInstance.gameObject.name
-            ) 
-            isTriggered = false;
-        }
-        catch{}
+        if 
+        (
+            Player.objInstance.gameObject != null 
+            &&
+            other.name == Player.objInstance.gameObject.name
+        ) 
+        isTriggered = false;
     }
     void Update()
     {
@@ -76,7 +68,7 @@ public class ShardCollect : MonoBehaviour
                 "true"
             );
             Score.objInstance.addScore?.Invoke();
-            SoundManager.objInstance.Crystal_get.Play();
+            // SoundManager.objInstance.Crystal_get.Play();
             Destroy(gameObject);
         }
     }

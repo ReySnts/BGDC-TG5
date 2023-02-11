@@ -10,14 +10,10 @@ public class PlayerMovement : MonoBehaviour
     bool isRunning = false;
     bool isWalking = false;
     Vector2 movement = Vector2.zero;
-    PlayerManager playerPosData;
     void Awake()
     {
         if (objInstance == null) objInstance = this;
         else if (objInstance != this) Destroy(gameObject);
-        //this playerprefs
-        playerPosData = FindObjectOfType<PlayerManager>();
-        playerPosData.LoadData();
     }
     void Start()
     {
@@ -49,8 +45,8 @@ public class PlayerMovement : MonoBehaviour
                     #region Run
                     isRunning = true;
                     speed = runSpeed;
-                    SoundManager.objInstance.walk.enabled = false;
-                    SoundManager.objInstance.run.enabled = true;
+                 //   SoundManager.objInstance.walk.enabled = false;
+                   // SoundManager.objInstance.run.enabled = true;
                     #endregion
                 }
             }
@@ -64,8 +60,8 @@ public class PlayerMovement : MonoBehaviour
                 #region Walk
                 isWalking = true;
                 speed = normalSpeed;
-                SoundManager.objInstance.run.enabled = false;
-                SoundManager.objInstance.walk.enabled = true;
+           //     SoundManager.objInstance.run.enabled = false;
+           //     SoundManager.objInstance.walk.enabled = true;
                 #endregion
             }
         }
@@ -74,12 +70,12 @@ public class PlayerMovement : MonoBehaviour
             if (isWalking) 
             {
                 isWalking = false;
-                SoundManager.objInstance.walk.enabled = false;
+             //   SoundManager.objInstance.walk.enabled = false;
             }
             if (isRunning) 
             {
                 isRunning = false;
-                SoundManager.objInstance.run.enabled = false;
+             //   SoundManager.objInstance.run.enabled = false;
             }
             movement = Vector2.zero;
         }
@@ -103,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
-        try
+        if (playerRigidbody != null) 
         {
             playerRigidbody.MovePosition
             (
@@ -113,6 +109,5 @@ public class PlayerMovement : MonoBehaviour
                 * Time.fixedDeltaTime
             );
         }
-        catch{}
     }
 }

@@ -1,15 +1,11 @@
 using UnityEngine;
 public class PauseMenu : Menu
 {
-    public bool hasPaused = false;
-    string pauseMenu = "PauseMenu";
-    string settingInGame = "SettingInGame";
-    public void Resume()
-    {
-        hasPaused = false;
-        DisableAllMenu();
-        Time.timeScale = 1f;
-    }
+    public static PauseMenu objInstance = null;
+    public bool canBeAccessed = false;
+    bool hasPaused = false;
+    readonly string pauseMenu = "PauseMenu";
+    readonly string settingInGame = "SettingsMenu";
     public override void RegisterMenu()
     {
         menus.Add
@@ -20,6 +16,12 @@ public class PauseMenu : Menu
         (
             GameObject.Find(settingInGame)
         );
+    }
+    void Awake()
+    {
+        objInstance ??= this;
+        if (objInstance != this) Destroy(gameObject);
+        else RegisterMenu();
     }
     public void OpenPause()
     {
@@ -32,13 +34,23 @@ public class PauseMenu : Menu
     public void Pause()
     {
         hasPaused = true;
+        SceneLevel_1.objInstance.DisableAllGameObject();
         OpenPause();
         Time.timeScale = 0f;
+    }
+    public void Resume()
+    {
+        hasPaused = false;
+        DisableAllMenu();
+        SceneLevel_1.objInstance.EnableAllGameObject();
+        Time.timeScale = 1f;
     }
     void Update()
     {
         if 
         (
+            canBeAccessed 
+            && 
             Input.GetKeyDown(KeyCode.Escape)
         )
         {
@@ -60,6 +72,6 @@ public class PauseMenu : Menu
         PlayerPrefs.DeleteKey("SavedScene");
         PlayerPrefs.DeleteKey("Saved");
         PlayerPrefs.DeleteKey("TimeToLoad");
-        Scene.objInstance.Restart();
+        SceneLevel_1.objInstance.Restart();
     }
 }

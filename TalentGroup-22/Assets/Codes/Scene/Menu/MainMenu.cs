@@ -1,17 +1,10 @@
 using UnityEngine;
 public class MainMenu : Menu
 {
+    public static MainMenu objInstance = null;
     const string ShardData = "WasDestroyed";
     string mainMenu = "MainMenu";
     string settingsMenu = "SettingsMenu";
-    public void OpenMenu()
-    {
-        foreach (GameObject menu in menus) 
-        {
-            if (menu.name == mainMenu) menu.SetActive(true);
-            else menu.SetActive(false);
-        }
-    }
     public override void RegisterMenu()
     {
         menus.Add
@@ -23,9 +16,24 @@ public class MainMenu : Menu
             GameObject.Find(settingsMenu)
         );
     }
+    void Awake()
+    {
+        objInstance ??= this;
+        if (objInstance != this) Destroy(gameObject);
+        else RegisterMenu();
+    }
+    public void OpenMenu()
+    {
+        foreach (GameObject menu in menus) 
+        {
+            if (menu.name == mainMenu) menu.SetActive(true);
+            else menu.SetActive(false);
+        }
+    }
     void Start()
     {
         OpenMenu();
+      // AudioManager.instance.ChangeBGM();
     }
     public void NewGame() 
     {
@@ -34,14 +42,14 @@ public class MainMenu : Menu
         PlayerPrefs.DeleteKey("SavedScene");
         PlayerPrefs.DeleteKey("Saved");
         PlayerPrefs.DeleteKey("TimeToLoad"); 
-        Scene.objInstance.StartNewGame();
+        SceneMenu.objInstance.StartNewGame();
     }
     public void LoadGame()
     {
         try
         {
             PlayerPrefs.SetString(ShardData, "true");
-            Scene.objInstance.Load();
+            SceneMenu.objInstance.Load();
         }
         catch{}
     }

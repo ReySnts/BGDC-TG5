@@ -8,7 +8,6 @@ public class PlayerHide : MonoBehaviour
     SpriteRenderer playerSprite = null;
     BoxCollider2D playerBoxCollider = null;
     GameObject playerMovementObject = null;
-    readonly string playerMovementName = "PlayerMovement";
     public bool hasClicked = false;
     void Awake()
     {
@@ -36,7 +35,7 @@ public class PlayerHide : MonoBehaviour
     }
     void Start()
     {
-        playerMovementObject = GameObject.Find(playerMovementName);
+        playerMovementObject = GameObject.Find("PlayerMovement");
         playerSprite = Player.objInstance.gameObject.GetComponent<SpriteRenderer>();
         playerBoxCollider = Player.objInstance.gameObject.GetComponent<BoxCollider2D>();
         Fail();

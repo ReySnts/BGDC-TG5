@@ -42,7 +42,7 @@ public class PlayerHealth : MonoBehaviour
     IEnumerator HoldRestart()
     {
         yield return new WaitForSeconds(2f);
-        Scene.objInstance.Restart();
+        SceneLevel_1.objInstance.Restart();
     }
     void Update()
     {
@@ -66,12 +66,12 @@ public class PlayerHealth : MonoBehaviour
             isDie = true;
             PlayerHide.objInstance.success?.Invoke();
             #region Play Game Over Sound
-            SoundManager.objInstance.Crystal_get.enabled = false;
-            SoundManager.objInstance.walk.enabled = false;
-            SoundManager.objInstance.run.enabled = false;
-            SoundManager.objInstance.Damaged.enabled = false;
-            SoundManager.objInstance.Explode_sound.enabled = false;
-            SoundManager.objInstance.Game_over.Play();
+            // SoundManager.objInstance.Crystal_get.enabled = false;
+            // SoundManager.objInstance.walk.enabled = false;
+            // SoundManager.objInstance.run.enabled = false;
+            // SoundManager.objInstance.Damaged.enabled = false;
+            // SoundManager.objInstance.Explode_sound.enabled = false;
+            // SoundManager.objInstance.Game_over.Play();
             #endregion
             StartCoroutine
             (

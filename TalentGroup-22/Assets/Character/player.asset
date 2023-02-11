@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: player
   m_EditorClassIdentifier: 
   SubjectName: 
-  SubjectFace: {fileID: 21300000, guid: ef6390499605a6446894c97fcb3d0310, type: 3}
+  SubjectFace: {fileID: 21300000, guid: 65c1d68a138cae94b90a1d97279c609e, type: 3}

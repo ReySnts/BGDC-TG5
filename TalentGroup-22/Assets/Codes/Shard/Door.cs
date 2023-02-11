@@ -3,11 +3,10 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     bool isOpened = false;
-    // bool notification = false;
     IEnumerator LoadCredits()
     {
         yield return new WaitForSeconds(2f);
-        Scene.objInstance.ViewCredits();
+        SceneLevel_1.objInstance.ViewCredits();
     }
     void Update()
     {

@@ -106,7 +106,7 @@ public abstract class Enemy : MonoBehaviour
                             break;
                         default:
                             PlayerHealth.objInstance.currentHealth -= damageAmount;
-                            SoundManager.objInstance.Damaged.Play();
+                            // SoundManager.objInstance.Damaged.Play();
                             StartCoroutine
                             (
                                 HoldHit()

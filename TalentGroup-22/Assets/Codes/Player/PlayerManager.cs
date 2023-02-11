@@ -2,12 +2,28 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class PlayerManager : MonoBehaviour
 {
+    public static PlayerManager objInstance = null;
     float pX = 0f;
     float pY = 0f;
     GameObject player = null;
+    public void LoadData()
+    {
+        PlayerPrefs.SetInt
+        (
+            "TimeToLoad", 
+            1
+        );
+        PlayerPrefs.Save();
+    }
+    void Awake()
+    {
+        objInstance ??= this;
+        if (objInstance != this) Destroy(gameObject);
+        else LoadData();
+    }
     void Start()
     {
-        player = GameObject.Find("Player");
+        player = Player.objInstance.gameObject;
         PlayerPrefs.SetInt
         (
             "SavedScene", 
@@ -32,15 +48,6 @@ public class PlayerManager : MonoBehaviour
             );
             PlayerPrefs.Save();
         }
-    }
-    public void LoadData()
-    {
-        PlayerPrefs.SetInt
-        (
-            "TimeToLoad", 
-            1
-        );
-        PlayerPrefs.Save();
     }
     public void SaveData()
     {

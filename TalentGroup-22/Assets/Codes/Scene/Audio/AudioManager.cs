@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
@@ -16,66 +14,119 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource ShardSource;
     [SerializeField] AudioSource BGMSource;
     [SerializeField] AudioSource DoorSource;
+    [SerializeField] AudioSource MainSource;
     [SerializeField] List<AudioClip> sfxClip = new List<AudioClip>();
     [SerializeField] List<AudioClip> playerClip = new List<AudioClip>();
     [SerializeField] List<AudioClip> bgmClip = new List<AudioClip>();
-
-    // vars for checking which scene has been loaded at present moment
-    private string lastScene;
-    private string currentScene;
 
     // var for saving value
     public const string MUSIC_KEY = "musicVolume";
     public const string SFX_KEY = "sfxVolume";
 
     // vars for checking player condition
-    private bool isWalking;
-    private bool isRunning;
-    private bool isOpen;
-    private bool notification;
-    void LoadVolume()
-    {
-        float musicVolume = PlayerPrefs.GetFloat(MUSIC_KEY, 1f);
-        float sfxVolume = PlayerPrefs.GetFloat(SFX_KEY, 1f);
-        mixer.SetFloat(VolumeSetting.MIXER_MUSIC, Mathf.Log10(musicVolume) * 20);
-        mixer.SetFloat(VolumeSetting.MIXER_SFX, Mathf.Log10(sfxVolume) * 20);
-    }
+    bool isWalking;
+    bool isRunning;
+    bool isOpen;
+    bool notification;
 
-    private void Awake()
+    void Awake()
     {
-        // getting the scenename
-        lastScene = SceneManager.GetActiveScene().name;
-        if (instance == null)
+        instance ??= this;
+        if (instance != this) Destroy(gameObject);
+        else
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
+            float musicVolume = PlayerPrefs.GetFloat(MUSIC_KEY, 1f);
+            float sfxVolume = PlayerPrefs.GetFloat(SFX_KEY, 1f);
+            mixer.SetFloat(SettingsMenu.MIXER_MUSIC, Mathf.Log10(musicVolume) * 20);
+            mixer.SetFloat(SettingsMenu.MIXER_SFX, Mathf.Log10(sfxVolume) * 20);
         }
-        LoadVolume();
     }
-    private void Update()
+    public void ChangeSceneBGM()
     {
-        currentScene = SceneManager.GetActiveScene().name;
-        /**
-        if(currentScene != lastScene)
+        switch
+        (
+            SceneManager.GetActiveScene().name
+        )
         {
-            lastScene = currentScene;
-            ChangeBGM();
+            case "Menu":
+                BGMSource.loop = true;
+                BGMSource.clip = bgmClip[0];
+                BGMSource.Play();
+                break;
+            case "InputName":
+                BGMSource.Stop();
+                BGMSource.loop = true;
+                BGMSource.clip = bgmClip[1];
+                BGMSource.Play();
+                break;
+            case "Level-1":
+                BGMSource.Stop();
+                MainSource.Stop();
+                MainSource.loop = true;
+                MainSource.clip = bgmClip[2];
+                MainSource.Play();
+                break;
+            case "DialogueBeforeBoss":
+                MainSource.Stop();
+                BGMSource.Stop();
+                BGMSource.loop = true;
+                BGMSource.clip = bgmClip[1];
+                BGMSource.Play();
+                break;
+            case "GoodEnding":
+                BGMSource.Stop();
+                BGMSource.loop = true;
+                BGMSource.clip = bgmClip[5];
+                BGMSource.Play();
+                break;
+            case "BadEnding":
+                BGMSource.Stop();
+                BGMSource.loop = false;
+                BGMSource.clip = bgmClip[4];
+                BGMSource.Play();
+                break;
+            default:
+                BGMSource.Stop();
+                break;
         }
-        */
-        if (!SFXSource.isPlaying)
-        {
-            SFXSource.Play();
-        }
+    }
+    void Start()
+    {
+        ChangeSceneBGM();
+    }
+    void Update()
+    {
+        if (!SFXSource.isPlaying) SFXSource.Play();
+    }
+    public void ShardSFX()
+    {
+        AudioClip clip = sfxClip[0];
+        ShardSource.PlayOneShot(clip);
     }
     public void ButtonSFX()
     {
         AudioClip clip = sfxClip[1];
         ButtonSource.PlayOneShot(clip);
     }
-    public void ShardSFX()
+    public void GameOver()
     {
-         AudioClip clip = sfxClip[0];
-         ShardSource.PlayOneShot(clip);
+        AudioClip clip = sfxClip[2];
+        SFXSource.PlayOneShot(clip);
+    }
+    public void GoodEndingEffect()
+    {
+        AudioClip clip = sfxClip[3];
+        SFXSource.PlayOneShot(clip);
+    }
+    public void NotifDoor()
+    {
+        AudioClip clip = sfxClip[4];
+        DoorSource.PlayOneShot(clip);
+    }
+    public void DoorOpen()
+    {
+        AudioClip clip = sfxClip[5];
+        DoorSource.PlayOneShot(clip);
     }
     public void DoorSFX()
     {
@@ -94,7 +145,6 @@ public class AudioManager : MonoBehaviour
             notification = false;
             isOpen = false;
         }
-
         if (!isOpen && notification && !DoorSource.isPlaying)
         {
             NotifDoor();
@@ -104,58 +154,5 @@ public class AudioManager : MonoBehaviour
             DoorSource.Stop();
             DoorOpen();
         }
-
-    }
-    public void NotifDoor()
-    {
-        AudioClip clip = sfxClip[4];
-        DoorSource.PlayOneShot(clip);
-    }
-    public void DoorOpen()
-    {
-        AudioClip clip = sfxClip[5];
-        DoorSource.PlayOneShot(clip);
-    }
-    public void ChangeBGM()
-    {
-        if (lastScene == "Menu")
-        {
-            BGMSource.loop = true;
-            BGMSource.clip = bgmClip[0];
-            BGMSource.Play();
-        }
-        else if (lastScene == "NaratorScreen")
-        { 
-            BGMSource.Stop();
-            BGMSource.loop = true;
-            BGMSource.clip = bgmClip[1];
-            BGMSource.Play();
-            DontDestroyOnLoad(gameObject);
-        } 
-        else if (lastScene == "InputName")
-        {
-            BGMSource.Pause();
-            // BGMSource.loop = true;
-            // BGMSource.clip = bgmClip[1];
-            BGMSource.UnPause();
-        }
-        else if (lastScene == "Level-1")
-        {
-            BGMSource.Stop();
-            BGMSource.loop = true;
-            BGMSource.clip = bgmClip[2];
-            BGMSource.Play();
-        } 
-        else BGMSource.Stop();
-    }
-    public void GameOver()
-    {
-        AudioClip clip = sfxClip[2];
-        SFXSource.PlayOneShot(clip);
-    }
-    public void GoodEndingEffect()
-    {
-        AudioClip clip = sfxClip[3];
-        SFXSource.PlayOneShot(clip);
     }
 }

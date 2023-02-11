@@ -17,27 +17,61 @@ public class DialogueBox : MonoBehaviour
     public float TextSpeed;
     public TMP_InputField nameField;
     private int DialogueIndex;
+    public Button continueButton;
     private bool canContinueToNextLine = false;
+
     void Start()
     {
         SetStyle(DialogueSegments[0].Speaker);
         StartCoroutine(PlayDialogue(DialogueSegments[0].Dialogue));
         nameField.gameObject.SetActive(false);
+        continueButton.gameObject.SetActive(false);
+
     }
     void Update()
     {
-        if (canContinueToNextLine && Input.GetKeyDown(KeyCode.Return))
+        if (canContinueToNextLine)
         {
-            DialogueIndex++;
-            nameField.gameObject.SetActive(true);
-           PlayerPrefs.SetString("SavedName", nameField.text);
-            if (DialogueIndex == DialogueSegments.Length)
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-                return;
-            }
-            SetStyle(DialogueSegments[DialogueIndex].Speaker);
-            StartCoroutine(PlayDialogue(DialogueSegments[DialogueIndex].Dialogue.Replace("playerName", (PlayerPrefs.GetString("SavedName")))));
+            continueButton.gameObject.SetActive(true);
+        } 
+    }
+
+    public void ContinueSentences()
+    {
+        continueButton.gameObject.SetActive(false);
+
+        DialogueIndex++;
+
+        if (DialogueIndex == 3)
+        {
+            InputName();
+
+        }
+        else if (DialogueIndex == 4)
+        {
+            PlayerPrefs.SetString("SavedName", nameField.text);
+            Debug.Log(PlayerPrefs.GetString("SavedName"));
+            nameField.gameObject.SetActive(false);
+        }
+        if (DialogueIndex == DialogueSegments.Length)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            return;
+
+        }
+        SetStyle(DialogueSegments[DialogueIndex].Speaker);
+        StartCoroutine(PlayDialogue(DialogueSegments[DialogueIndex].Dialogue.Replace("playerName", (PlayerPrefs.GetString("SavedName")))));
+    }
+
+    void InputName()
+    {
+        nameField.gameObject.SetActive(true);
+        if (nameField.text.Length < 0)
+        {
+            canContinueToNextLine = true;
+        } else
+        {
+            canContinueToNextLine = false;
         }
     }
     void SetStyle(Subject Speaker)
@@ -54,6 +88,7 @@ public class DialogueBox : MonoBehaviour
     
         SpeakerNameDisplay.SetText(Speaker.SubjectName);
     }
+
     IEnumerator PlayDialogue(string Dialogue)
     {
         DialogueDisplay.SetText(string.Empty);
@@ -64,11 +99,13 @@ public class DialogueBox : MonoBehaviour
             yield return new WaitForSeconds(1f / TextSpeed);
         }
         canContinueToNextLine = true;
-    } 
+    }
+
+
 }
 [System.Serializable]
 public class DialogueSegment
 {
     public string Dialogue;
     public Subject Speaker;
-} 
+}

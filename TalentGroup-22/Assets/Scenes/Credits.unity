@@ -614,7 +614,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 380940002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e726369ee17875149aba03f73254dfa1, type: 3}
+  m_Script: {fileID: 11500000, guid: 17010c09156b0264b95ddd63bc2eb5ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &428270935
@@ -737,7 +737,7 @@ GameObject:
   - component: {fileID: 544892486}
   - component: {fileID: 544892487}
   m_Layer: 0
-  m_Name: Credits
+  m_Name: Credits_Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

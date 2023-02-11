@@ -2,16 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 public abstract class Menu : MonoBehaviour
 {
-    public static Menu objInstance = null;
     protected List<GameObject> menus = new List<GameObject>();
     public abstract void RegisterMenu();
-    protected void Awake()
+    public void EnableAllMenu()
     {
-        objInstance ??= this;
-        if (objInstance != this) Destroy(gameObject);
-        else RegisterMenu();
+        foreach (GameObject menu in menus) menu.SetActive(true);
     }
-    public virtual void DisableAllMenu()
+    public void DisableAllMenu()
     {
         foreach (GameObject menu in menus) menu.SetActive(false);
     }

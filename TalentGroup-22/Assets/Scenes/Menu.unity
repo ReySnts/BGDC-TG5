@@ -154,7 +154,6 @@ Transform:
   - {fileID: 120166040}
   - {fileID: 384084631}
   - {fileID: 1396779259}
-  - {fileID: 361625428}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -355,7 +354,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 120166039}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e726369ee17875149aba03f73254dfa1, type: 3}
+  m_Script: {fileID: 11500000, guid: af9c40a02a7b29b4da61e8f90c1a4ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &120436679 stripped
@@ -469,51 +468,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 335495254}
   m_CullTransparentMesh: 1
---- !u!1 &361625427
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 361625428}
-  - component: {fileID: 361625429}
-  m_Layer: 0
-  m_Name: Level_Loader
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &361625428
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 361625427}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 18443032}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &361625429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 361625427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f732c54fd11f1aa4d913d9f18a6f1720, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  transition: {fileID: 0}
 --- !u!1 &384084630
 GameObject:
   m_ObjectHideFlags: 0
@@ -1268,7 +1222,7 @@ GameObject:
   - component: {fileID: 1396779259}
   - component: {fileID: 1396779260}
   m_Layer: 0
-  m_Name: Volume_Settings
+  m_Name: Settings_Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

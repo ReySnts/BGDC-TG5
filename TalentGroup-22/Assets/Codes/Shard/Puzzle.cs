@@ -9,8 +9,8 @@ public class Puzzle : MonoBehaviour
     const string PuzzleData = "IsPuzzleSolved";
     void Awake()
     {
-        if (objInstance == null) objInstance = this;
-        else if (objInstance != this) Destroy(gameObject);
+        objInstance ??= this;
+        if (objInstance != this) Destroy(gameObject);
     }
     void Start()
     {
