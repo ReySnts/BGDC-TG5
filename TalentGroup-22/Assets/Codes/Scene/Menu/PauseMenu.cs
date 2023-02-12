@@ -36,6 +36,7 @@ public class PauseMenu : Menu
         hasPaused = true;
         SceneLevel_1.objInstance.DisableAllGameObject();
         OpenPause();
+        Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0f;
     }
     public void Resume()
@@ -43,6 +44,7 @@ public class PauseMenu : Menu
         hasPaused = false;
         DisableAllMenu();
         SceneLevel_1.objInstance.EnableAllGameObject();
+        Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1f;
     }
     void Update()

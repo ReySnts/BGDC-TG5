@@ -68,7 +68,7 @@ public class ShardCollect : MonoBehaviour
                 "true"
             );
             Score.objInstance.addScore?.Invoke();
-            // SoundManager.objInstance.Crystal_get.Play();
+            AudioManager.instance.ShardCollectSFX();
             Destroy(gameObject);
         }
     }

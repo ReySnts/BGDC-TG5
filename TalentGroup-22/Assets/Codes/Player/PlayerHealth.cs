@@ -65,14 +65,7 @@ public class PlayerHealth : MonoBehaviour
         {
             isDie = true;
             PlayerHide.objInstance.success?.Invoke();
-            #region Play Game Over Sound
-            // SoundManager.objInstance.Crystal_get.enabled = false;
-            // SoundManager.objInstance.walk.enabled = false;
-            // SoundManager.objInstance.run.enabled = false;
-            // SoundManager.objInstance.Damaged.enabled = false;
-            // SoundManager.objInstance.Explode_sound.enabled = false;
-            // SoundManager.objInstance.Game_over.Play();
-            #endregion
+            AudioManager.instance.GameOver();
             StartCoroutine
             (
                 HoldRestart()

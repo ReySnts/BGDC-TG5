@@ -381,6 +381,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8150968359260009782, guid: 2e869249903ee4b41b0b8bfc58818880, type: 3}
+      propertyPath: DoorSource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8150968359260009782, guid: 2e869249903ee4b41b0b8bfc58818880, type: 3}
+      propertyPath: ShardSource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8150968359260009782, guid: 2e869249903ee4b41b0b8bfc58818880, type: 3}
+      propertyPath: bgmClip.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8150968359260009782, guid: 2e869249903ee4b41b0b8bfc58818880, type: 3}
+      propertyPath: sfxClip.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8150968359260009782, guid: 2e869249903ee4b41b0b8bfc58818880, type: 3}
+      propertyPath: sfxClip.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8150968359260009782, guid: 2e869249903ee4b41b0b8bfc58818880, type: 3}
+      propertyPath: sfxClip.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 0e27d7a2b3f58054c9066a977d36320a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e869249903ee4b41b0b8bfc58818880, type: 3}
 --- !u!114 &159245996 stripped

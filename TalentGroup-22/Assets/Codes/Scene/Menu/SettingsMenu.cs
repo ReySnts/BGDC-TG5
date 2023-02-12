@@ -18,20 +18,44 @@ public class SettingsMenu : MonoBehaviour
     {
         musicSlider = GameObject.Find("Slider BGM").GetComponent<Slider>();
         sfxSlider = GameObject.Find("Slider SFX").GetComponent<Slider>();
-        musicSlider.value = PlayerPrefs.GetFloat(AudioManager.MUSIC_KEY, 1f);
-        sfxSlider.value = PlayerPrefs.GetFloat(AudioManager.SFX_KEY, 1f);
+        musicSlider.value = PlayerPrefs.GetFloat
+        (
+            AudioManager.MUSIC_KEY, 
+            1f
+        );
+        sfxSlider.value = PlayerPrefs.GetFloat
+        (
+            AudioManager.SFX_KEY, 
+            1f
+        );
     }
     public void SetMusicVolume()
     {
-        mixer.SetFloat(MIXER_MUSIC, Mathf.Log10(musicSlider.value) * 20f);
+        mixer.SetFloat
+        (
+            MIXER_MUSIC, 
+            Mathf.Log10(musicSlider.value) * 20f
+        );
     }
     public void SetSFXVolume()
     {
-        mixer.SetFloat(MIXER_SFX, Mathf.Log10(sfxSlider.value) * 20f);
+        mixer.SetFloat
+        (
+            MIXER_SFX, 
+            Mathf.Log10(sfxSlider.value) * 20f
+        );
     }
     void OnDisable()
     {
-        PlayerPrefs.SetFloat(AudioManager.MUSIC_KEY, musicSlider.value);
-        PlayerPrefs.SetFloat(AudioManager.SFX_KEY, sfxSlider.value);
+        PlayerPrefs.SetFloat
+        (
+            AudioManager.MUSIC_KEY, 
+            musicSlider.value
+        );
+        PlayerPrefs.SetFloat
+        (
+            AudioManager.SFX_KEY, 
+            sfxSlider.value
+        );
     }
 }

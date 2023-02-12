@@ -3,6 +3,7 @@ using UnityEngine;
 public class SceneLevel_1 : Scene
 {
     public static SceneLevel_1 objInstance = null;
+    GameObject introScreen = null;
     void DisableCertainConditions(GameObject gameObject)
     {
         if 
@@ -76,14 +77,22 @@ public class SceneLevel_1 : Scene
         if (objInstance != this) Destroy(gameObject);
         else RegisterGameObject();
     }
+    void FadeIntroScreen()
+    {
+        EnableAllGameObject();
+        PauseMenu.objInstance.canBeAccessed = true;
+        introScreen.SetActive(false);
+    }
     IEnumerator WaitToFade()
     {
         yield return new WaitForSeconds(4f);
-        EnableAllGameObject();
-        PauseMenu.objInstance.canBeAccessed = true;
+        FadeIntroScreen();
     }
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        introScreen = GameObject.Find("Intro");
+        introScreen.SetActive(true);
         StartCoroutine(
             WaitToFade()
         );

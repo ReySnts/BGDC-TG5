@@ -4,8 +4,8 @@ public abstract class Enemy : MonoBehaviour
 {
     protected Transform target = null;
     protected Animator animator = null;
-    protected float minRange = 1.125f;
-    protected float maxRange = 5f;
+    public float minRange = 1.125f;
+    public float maxRange = 5f;
     protected float speed = 0f;
     float aISpeed = 300f;
     float ghostSpeed = 1.5f;
@@ -106,7 +106,7 @@ public abstract class Enemy : MonoBehaviour
                             break;
                         default:
                             PlayerHealth.objInstance.currentHealth -= damageAmount;
-                            // SoundManager.objInstance.Damaged.Play();
+                            AudioManager.instance.DamagePlayer();
                             StartCoroutine
                             (
                                 HoldHit()
@@ -129,7 +129,7 @@ public abstract class Enemy : MonoBehaviour
     }
     protected void CheckRange()
     {
-        if (target != null)
+        try
         {
             if
             (
@@ -165,6 +165,7 @@ public abstract class Enemy : MonoBehaviour
                 BackToBase();
             }
         }
+        catch{}
     }
     protected void SetAnim
     (

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Guide(Reveal)
   m_EditorClassIdentifier: 
   SubjectName: Guide
-  SubjectFace: {fileID: 21300000, guid: f8b04aab8ed21de44bb16697df5c4447, type: 3}
+  SubjectFace: {fileID: 21300000, guid: a9d924d82c789ae42a4b95f49cfaafd0, type: 3}

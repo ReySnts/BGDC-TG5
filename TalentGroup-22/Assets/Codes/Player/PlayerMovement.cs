@@ -45,8 +45,8 @@ public class PlayerMovement : MonoBehaviour
                     #region Run
                     isRunning = true;
                     speed = runSpeed;
-                 //   SoundManager.objInstance.walk.enabled = false;
-                   // SoundManager.objInstance.run.enabled = true;
+                    AudioManager.instance.PlayerWalk(false);
+                    AudioManager.instance.PlayerRun(true);
                     #endregion
                 }
             }
@@ -60,8 +60,8 @@ public class PlayerMovement : MonoBehaviour
                 #region Walk
                 isWalking = true;
                 speed = normalSpeed;
-           //     SoundManager.objInstance.run.enabled = false;
-           //     SoundManager.objInstance.walk.enabled = true;
+                AudioManager.instance.PlayerRun(false);
+                AudioManager.instance.PlayerWalk(true);
                 #endregion
             }
         }
@@ -70,12 +70,12 @@ public class PlayerMovement : MonoBehaviour
             if (isWalking) 
             {
                 isWalking = false;
-             //   SoundManager.objInstance.walk.enabled = false;
+                AudioManager.instance.PlayerWalk(false);
             }
             if (isRunning) 
             {
                 isRunning = false;
-             //   SoundManager.objInstance.run.enabled = false;
+                AudioManager.instance.PlayerRun(false);
             }
             movement = Vector2.zero;
         }

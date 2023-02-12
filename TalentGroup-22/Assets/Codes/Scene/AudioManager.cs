@@ -9,14 +9,15 @@ public class AudioManager : MonoBehaviour
     // variable for audio
     [SerializeField] AudioMixer mixer;
     [SerializeField] AudioSource SFXSource;
-    [SerializeField] AudioSource PlayerSource;
+    [SerializeField] AudioSource PlayerWalkSource;
+    [SerializeField] AudioSource PlayerRunSource;
     [SerializeField] AudioSource ButtonSource;
     [SerializeField] AudioSource ShardSource;
     [SerializeField] AudioSource BGMSource;
     [SerializeField] AudioSource DoorSource;
     [SerializeField] AudioSource MainSource;
+
     [SerializeField] List<AudioClip> sfxClip = new List<AudioClip>();
-    [SerializeField] List<AudioClip> playerClip = new List<AudioClip>();
     [SerializeField] List<AudioClip> bgmClip = new List<AudioClip>();
 
     // var for saving value
@@ -35,10 +36,26 @@ public class AudioManager : MonoBehaviour
         if (instance != this) Destroy(gameObject);
         else
         {
-            float musicVolume = PlayerPrefs.GetFloat(MUSIC_KEY, 1f);
-            float sfxVolume = PlayerPrefs.GetFloat(SFX_KEY, 1f);
-            mixer.SetFloat(SettingsMenu.MIXER_MUSIC, Mathf.Log10(musicVolume) * 20);
-            mixer.SetFloat(SettingsMenu.MIXER_SFX, Mathf.Log10(sfxVolume) * 20);
+            float musicVolume = PlayerPrefs.GetFloat
+            (
+                MUSIC_KEY, 
+                1f
+            );
+            float sfxVolume = PlayerPrefs.GetFloat
+            (
+                SFX_KEY, 
+                1f
+            );
+            mixer.SetFloat
+            (
+                SettingsMenu.MIXER_MUSIC, 
+                Mathf.Log10(musicVolume) * 20f
+            );
+            mixer.SetFloat
+            (
+                SettingsMenu.MIXER_SFX, 
+                Mathf.Log10(sfxVolume) * 20f
+            );
         }
     }
     public void ChangeSceneBGM()
@@ -93,48 +110,67 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         ChangeSceneBGM();
+        PlayerWalk(false);
+        PlayerRun(false);
     }
     void Update()
     {
-        if (!SFXSource.isPlaying) SFXSource.Play();
+        if (!SFXSource.isPlaying) SFXSource?.Play();
     }
-    public void ShardSFX()
+    public void PlayerWalk(bool isEnabled)
     {
-        AudioClip clip = sfxClip[0];
-        ShardSource.PlayOneShot(clip);
+        if (PlayerWalkSource != null) PlayerWalkSource.enabled = isEnabled;
+    }
+    public void PlayerRun(bool isEnabled)
+    {
+        if (PlayerRunSource != null) PlayerRunSource.enabled = isEnabled;
+    }
+    #region SFX
+    public void ShardCollectSFX()
+    {
+        ShardSource?.PlayOneShot(sfxClip[0]);
     }
     public void ButtonSFX()
     {
-        AudioClip clip = sfxClip[1];
-        ButtonSource.PlayOneShot(clip);
+        ButtonSource?.PlayOneShot(sfxClip[1]);
     }
     public void GameOver()
     {
-        AudioClip clip = sfxClip[2];
-        SFXSource.PlayOneShot(clip);
+        SFXSource?.Stop();
+        PlayerWalk(false);
+        PlayerRun(false);
+        SFXSource?.PlayOneShot(sfxClip[2]);
     }
     public void GoodEndingEffect()
     {
-        AudioClip clip = sfxClip[3];
-        SFXSource.PlayOneShot(clip);
+        SFXSource?.PlayOneShot(sfxClip[3]);
     }
     public void NotifDoor()
     {
-        AudioClip clip = sfxClip[4];
-        DoorSource.PlayOneShot(clip);
+        DoorSource?.PlayOneShot(sfxClip[4]);
     }
     public void DoorOpen()
     {
-        AudioClip clip = sfxClip[5];
-        DoorSource.PlayOneShot(clip);
+        DoorSource?.PlayOneShot(sfxClip[5]);
     }
+    public void DamagePlayer()
+    {
+        SFXSource?.PlayOneShot(sfxClip[6]);
+    }
+    #endregion
     public void DoorSFX()
     {
-        if (PlayerPrefs.GetInt("SavedScore") == 7)
+        if 
+        (
+            PlayerPrefs.GetInt("SavedScore") == 7
+        )
         {
             isOpen = false;
             notification = true;
-            if (Input.GetKeyDown(KeyCode.F))
+            if 
+            (
+                Input.GetKeyDown(KeyCode.F)
+            )
             {
                 notification = false;
                 isOpen = true;
@@ -151,7 +187,7 @@ public class AudioManager : MonoBehaviour
         }
         else if (isOpen && !notification && !DoorSource.isPlaying)
         {
-            DoorSource.Stop();
+            DoorSource?.Stop();
             DoorOpen();
         }
     }
