@@ -23,9 +23,8 @@ public class EnemyAI : Enemy
     public string lockerNameBeingSearched = null;
     void Start()
     {
-        enemyBody = GameObject.Find("Player").GetComponent<Rigidbody2D>();
         pathMaker = GetComponent<Seeker>();
-       // enemyBody = GetComponent<Rigidbody2D>();
+        enemyBody = GetComponent<Rigidbody2D>();
         enemyBody.gravityScale = 0f;
         minRange = wayPointDistance;
         maxRange *= 2f;

@@ -40,8 +40,11 @@ public abstract class Enemy : MonoBehaviour
     }
     protected void SuccessFindPlayer()
     {
-        isChasingPlayer = true;
-        target = GameObject.Find("Player").transform;
+        if (Player.objInstance != null) 
+        {
+            isChasingPlayer = true;
+            target = Player.objInstance.transform;
+        }
     }
     void OnEnable() 
     {

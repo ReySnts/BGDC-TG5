@@ -20,9 +20,19 @@ public class AudioManager : MonoBehaviour
     [SerializeField] List<AudioClip> sfxClip = new List<AudioClip>();
     [SerializeField] List<AudioClip> bgmClip = new List<AudioClip>();
 
+    // vars for checking which scene has been loaded at present moment
+    string lastScene;
+    string currentScene;
+
+    string audioResourcesPath = "Audio/";
+    string sFXResourcesPath;
+    string bGMResourcesPath;
+
     // var for saving value
     public const string MUSIC_KEY = "musicVolume";
     public const string SFX_KEY = "sfxVolume";
+    public const float defaultValue = 1f;
+    public const float multiplier = 20f;
 
     // vars for checking player condition
     bool isWalking;
@@ -36,34 +46,112 @@ public class AudioManager : MonoBehaviour
         if (instance != this) Destroy(gameObject);
         else
         {
+            #region Setup
+            lastScene = SceneManager.GetActiveScene().name;
+            sFXResourcesPath = audioResourcesPath + "SFX/";
+            bGMResourcesPath = audioResourcesPath + "BGM/";
+            DontDestroyOnLoad(gameObject);
+            mixer = Resources.Load<AudioMixer>(audioResourcesPath + "mixer");
+            #endregion
+            #region Find Source
+            SFXSource = GameObject.Find("SFXSource").GetComponent<AudioSource>();
+            PlayerWalkSource = GameObject.Find("PlayerWalkSource").GetComponent<AudioSource>();
+            PlayerRunSource = GameObject.Find("PlayerRunSource").GetComponent<AudioSource>();
+            ButtonSource = GameObject.Find("ButtonSource").GetComponent<AudioSource>();
+            ShardSource = GameObject.Find("ShardSource").GetComponent<AudioSource>();
+            BGMSource = GameObject.Find("BGMSourceMusic").GetComponent<AudioSource>();
+            DoorSource = GameObject.Find("DoorSource").GetComponent<AudioSource>();
+            MainSource = GameObject.Find("MainSource").GetComponent<AudioSource>();
+            #endregion
+            #region List SFX
+            sfxClip.Clear();
+            sfxClip.Add
+            (
+                Resources.Load<AudioClip>(sFXResourcesPath + "Crystal Get (New)")
+            );
+            sfxClip.Add
+            (
+                Resources.Load<AudioClip>(sFXResourcesPath + "Button Select")
+            );
+            sfxClip.Add
+            (
+                Resources.Load<AudioClip>(sFXResourcesPath + "Game over")
+            );
+            sfxClip.Add
+            (
+                Resources.Load<AudioClip>(bGMResourcesPath + "Ending (good)")
+            );
+            sfxClip.Add
+            (
+                Resources.Load<AudioClip>(sFXResourcesPath + "Notif")
+            );
+            sfxClip.Add
+            (
+                Resources.Load<AudioClip>(sFXResourcesPath + "Door_Open")
+            );
+            sfxClip.Add
+            (
+                Resources.Load<AudioClip>(sFXResourcesPath + "Damaged")
+            );
+            sfxClip.Add
+            (
+                Resources.Load<AudioClip>(sFXResourcesPath + "Crystal")
+            );
+            #endregion
+            #region List BGM
+            bgmClip.Clear();
+            bgmClip.Add
+            (
+                Resources.Load<AudioClip>(bGMResourcesPath + "Main Menu")
+            );
+            bgmClip.Add
+            (
+                Resources.Load<AudioClip>(bGMResourcesPath + "Your Name BGM")
+            );
+            bgmClip.Add
+            (
+                Resources.Load<AudioClip>(bGMResourcesPath + "Stage 1 (No Monster)")
+            );
+            bgmClip.Add
+            (
+                Resources.Load<AudioClip>(bGMResourcesPath + "HER_1")
+            );
+            bgmClip.Add
+            (
+                Resources.Load<AudioClip>(bGMResourcesPath + "Ending (good)")
+            );
+            bgmClip.Add
+            (
+                Resources.Load<AudioClip>(bGMResourcesPath + "HER_2")
+            );
+            #endregion
+            #region Load Volume
             float musicVolume = PlayerPrefs.GetFloat
             (
                 MUSIC_KEY, 
-                1f
+                defaultValue
             );
             float sfxVolume = PlayerPrefs.GetFloat
             (
                 SFX_KEY, 
-                1f
+                defaultValue
             );
             mixer.SetFloat
             (
                 SettingsMenu.MIXER_MUSIC, 
-                Mathf.Log10(musicVolume) * 20f
+                Mathf.Log10(musicVolume) * multiplier
             );
             mixer.SetFloat
             (
                 SettingsMenu.MIXER_SFX, 
-                Mathf.Log10(sfxVolume) * 20f
+                Mathf.Log10(sfxVolume) * multiplier
             );
+            #endregion
         }
     }
-    public void ChangeSceneBGM()
+    void ChangeBGM()
     {
-        switch
-        (
-            SceneManager.GetActiveScene().name
-        )
+        switch(lastScene)
         {
             case "Menu":
                 BGMSource.loop = true;
@@ -87,19 +175,19 @@ public class AudioManager : MonoBehaviour
                 MainSource.Stop();
                 BGMSource.Stop();
                 BGMSource.loop = true;
-                BGMSource.clip = bgmClip[1];
+                BGMSource.clip = bgmClip[3];
                 BGMSource.Play();
                 break;
             case "GoodEnding":
                 BGMSource.Stop();
                 BGMSource.loop = true;
-                BGMSource.clip = bgmClip[5];
+                BGMSource.clip = bgmClip[4];
                 BGMSource.Play();
                 break;
             case "BadEnding":
                 BGMSource.Stop();
                 BGMSource.loop = false;
-                BGMSource.clip = bgmClip[4];
+                BGMSource.clip = bgmClip[5];
                 BGMSource.Play();
                 break;
             default:
@@ -109,12 +197,18 @@ public class AudioManager : MonoBehaviour
     }
     void Start()
     {
-        ChangeSceneBGM();
         PlayerWalk(false);
         PlayerRun(false);
+        ChangeBGM();
     }
     void Update()
     {
+        currentScene = SceneManager.GetActiveScene().name;
+        if (currentScene != lastScene) 
+        {
+            lastScene = currentScene;
+            ChangeBGM();
+        }
         if (!SFXSource.isPlaying) SFXSource?.Play();
     }
     public void PlayerWalk(bool isEnabled)
@@ -156,6 +250,10 @@ public class AudioManager : MonoBehaviour
     public void DamagePlayer()
     {
         SFXSource?.PlayOneShot(sfxClip[6]);
+    }
+    public void ShardSlotSFX()
+    {
+        SFXSource?.PlayOneShot(sfxClip[7]);
     }
     #endregion
     public void DoorSFX()

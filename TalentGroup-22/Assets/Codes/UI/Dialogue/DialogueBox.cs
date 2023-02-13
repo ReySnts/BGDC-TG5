@@ -34,7 +34,10 @@ public class DialogueBox : MonoBehaviour
     {
         TextSpeed = Time.deltaTime;
         SetStyle(DialogueSegments[0].Speaker);
-        StartCoroutine(PlayDialogue(DialogueSegments[0].Dialogue));
+        StartCoroutine
+        (
+            PlayDialogue(DialogueSegments[0].Dialogue)
+        );
         nameField.gameObject.SetActive(false);
         continueButton.gameObject.SetActive(false);
     }
@@ -61,25 +64,47 @@ public class DialogueBox : MonoBehaviour
         DialogueIndex++;
         if (DialogueIndex == DialogueSegments.Length)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            SceneManager.LoadScene
+            (
+                SceneManager.GetActiveScene().buildIndex + 1
+            );
             return;
         }
-        else if (DialogueIndex == 3) InputName();
+        else if (DialogueIndex == 3) nameField.gameObject.SetActive(true);
         else if (DialogueIndex == 4)
         {
-            PlayerPrefs.SetString("SavedName", nameField.text);
+            PlayerPrefs.SetString
+            (
+                "SavedName", 
+                nameField.text
+            );
             nameField.gameObject.SetActive(false);
         }
-        SetStyle(DialogueSegments[DialogueIndex].Speaker);
-        StartCoroutine(PlayDialogue(DialogueSegments[DialogueIndex].Dialogue.Replace("playerName", (PlayerPrefs.GetString("SavedName")))));
-    }
-    void InputName()
-    {
-        nameField.gameObject.SetActive(true);
+        SetStyle
+        (
+            DialogueSegments[DialogueIndex].Speaker
+        );
+        StartCoroutine
+        (
+            PlayDialogue
+            (
+                DialogueSegments[DialogueIndex].Dialogue.Replace
+                (
+                    "playerName", 
+                    PlayerPrefs.GetString("SavedName")
+                )
+            )
+        );
     }
     void SetStyle(Subject Speaker)
     {
-        if (Speaker.SubjectFace == null) SpeakerFaceDisplay.color = new Color(0, 0, 0, 0);
+        if (Speaker.SubjectFace == null) SpeakerFaceDisplay.color = new Color
+        (
+            0f, 
+            0f, 
+            0f, 
+            0f
+        );
         else
         {
             SpeakerFaceDisplay.sprite = Speaker.SubjectFace;

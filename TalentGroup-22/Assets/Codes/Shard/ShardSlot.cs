@@ -22,6 +22,7 @@ IDropHandler
         if (eventData.pointerDrag != null)
         {
             hasReceived = true;
+            AudioManager.instance.ShardSlotSFX();
             shardRectTransform = eventData.pointerDrag.GetComponent<RectTransform>();
             shardRectTransform.anchoredPosition = rectTransform.anchoredPosition;
             #region Check Correctness

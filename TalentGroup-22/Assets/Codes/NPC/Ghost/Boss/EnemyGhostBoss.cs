@@ -16,8 +16,8 @@ public class EnemyGhostBoss : EnemyGhost
             {
                 tan = Mathf.Atan2
                 (
-                    Player.objInstance.gameObject.transform.position.y,
-                    Player.objInstance.gameObject.transform.position.x
+                    Player.objInstance.transform.position.y,
+                    Player.objInstance.transform.position.x
                 );
                 angleBetweenPlayer = tan * Mathf.Rad2Deg + 90f;
                 splashClone = Instantiate

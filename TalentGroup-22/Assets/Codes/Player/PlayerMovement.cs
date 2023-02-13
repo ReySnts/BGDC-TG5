@@ -17,8 +17,8 @@ public class PlayerMovement : MonoBehaviour
     }
     void Start()
     {
-        playerRigidbody = Player.objInstance.gameObject.GetComponent<Rigidbody2D>();
-        playerAnimator = Player.objInstance.gameObject.GetComponent<Animator>();
+        playerRigidbody = Player.objInstance.GetComponent<Rigidbody2D>();
+        playerAnimator = Player.objInstance.GetComponent<Animator>();
     }
     void Update()
     {

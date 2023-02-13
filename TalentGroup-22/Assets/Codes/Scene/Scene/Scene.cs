@@ -14,6 +14,13 @@ public class Scene : MonoBehaviour
     {
         foreach (GameObject gameObj in gameObjects) gameObj.SetActive(false);
     }
+    public void NextScene()
+    {
+        SceneManager.LoadScene
+        (
+            SceneManager.GetActiveScene().buildIndex + 1
+        );
+    }
     public void Restart()
     {
         SceneManager.LoadScene

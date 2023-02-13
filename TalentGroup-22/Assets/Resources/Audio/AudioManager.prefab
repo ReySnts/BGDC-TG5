@@ -426,7 +426,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -3465979725825807181, guid: 6e6eb50a4ce18bb41b7fc694c285616a, type: 2}
-  m_audioClip: {fileID: 8300000, guid: c344e0b5d2f6b6441944dfc0131cff48, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1085,15 +1085,5 @@ MonoBehaviour:
   BGMSource: {fileID: 1291102561}
   DoorSource: {fileID: 490019539391471681}
   MainSource: {fileID: 6010169494588354093}
-  sfxClip:
-  - {fileID: 8300000, guid: 4cf5cca2382aab645a3e1002164171ab, type: 3}
-  - {fileID: 8300000, guid: c344e0b5d2f6b6441944dfc0131cff48, type: 3}
-  - {fileID: 8300000, guid: 880c180b4cbcbbc45956a4445be71fde, type: 3}
-  - {fileID: 8300000, guid: dffaacea270b3e3449975c93996b1bc2, type: 3}
-  bgmClip:
-  - {fileID: 8300000, guid: 32e7ebc62afdc064daf1776e739487a6, type: 3}
-  - {fileID: 8300000, guid: 4cce0f02d3fb7e844b3a0afb70c3aebe, type: 3}
-  - {fileID: 8300000, guid: 892cccb59122cb4498a0be334320c62c, type: 3}
-  - {fileID: 8300000, guid: c45e75965644b9d4082d9e04bd265ede, type: 3}
-  - {fileID: 8300000, guid: 44e2eebf796f624459637ee14d50e3a0, type: 3}
-  - {fileID: 8300000, guid: 809bf3895577c9244bdca99801526823, type: 3}
+  sfxClip: []
+  bgmClip: []

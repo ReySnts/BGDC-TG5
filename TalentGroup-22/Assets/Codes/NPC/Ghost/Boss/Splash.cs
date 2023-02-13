@@ -9,7 +9,7 @@ public class Splash : MonoBehaviour
     {
         try
         {
-            playerPosition = Player.objInstance.gameObject.transform.position;
+            playerPosition = Player.objInstance.transform.position;
         }
         catch{}
     }
@@ -21,7 +21,7 @@ public class Splash : MonoBehaviour
             (
                 other.gameObject.name
                 ==
-                Player.objInstance.gameObject.name
+                Player.objInstance.name
             )
             {
                 hasHitPlayer = true;

@@ -6,7 +6,7 @@ public class Door : MonoBehaviour
     IEnumerator LoadCredits()
     {
         yield return new WaitForSeconds(2f);
-        SceneLevel_1.objInstance.ViewCredits();
+        SceneLevel_1.objInstance.NextScene();
     }
     void Update()
     {

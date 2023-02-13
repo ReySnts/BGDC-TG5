@@ -36,8 +36,8 @@ public class PlayerHide : MonoBehaviour
     void Start()
     {
         playerMovementObject = GameObject.Find("PlayerMovement");
-        playerSprite = Player.objInstance.gameObject.GetComponent<SpriteRenderer>();
-        playerBoxCollider = Player.objInstance.gameObject.GetComponent<BoxCollider2D>();
+        playerSprite = Player.objInstance.GetComponent<SpriteRenderer>();
+        playerBoxCollider = Player.objInstance.GetComponent<BoxCollider2D>();
         Fail();
     }
     void Update()

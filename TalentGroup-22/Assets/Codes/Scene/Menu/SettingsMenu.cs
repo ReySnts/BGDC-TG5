@@ -21,12 +21,12 @@ public class SettingsMenu : MonoBehaviour
         musicSlider.value = PlayerPrefs.GetFloat
         (
             AudioManager.MUSIC_KEY, 
-            1f
+            AudioManager.defaultValue
         );
         sfxSlider.value = PlayerPrefs.GetFloat
         (
             AudioManager.SFX_KEY, 
-            1f
+            AudioManager.defaultValue
         );
     }
     public void SetMusicVolume()
@@ -34,7 +34,7 @@ public class SettingsMenu : MonoBehaviour
         mixer.SetFloat
         (
             MIXER_MUSIC, 
-            Mathf.Log10(musicSlider.value) * 20f
+            Mathf.Log10(musicSlider.value) * AudioManager.multiplier
         );
     }
     public void SetSFXVolume()
@@ -42,7 +42,7 @@ public class SettingsMenu : MonoBehaviour
         mixer.SetFloat
         (
             MIXER_SFX, 
-            Mathf.Log10(sfxSlider.value) * 20f
+            Mathf.Log10(sfxSlider.value) * AudioManager.multiplier
         );
     }
     void OnDisable()

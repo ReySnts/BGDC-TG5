@@ -30,9 +30,9 @@ public class ShardCollect : MonoBehaviour
     {
         if 
         (
-            Player.objInstance.gameObject != null 
+            Player.objInstance != null 
             && 
-            other.name == Player.objInstance.gameObject.name
+            other.name == Player.objInstance.name
         ) 
         {
             if (Time.time - lastCollectedTime < pauseDuration) return;
@@ -47,9 +47,9 @@ public class ShardCollect : MonoBehaviour
     {
         if 
         (
-            Player.objInstance.gameObject != null 
+            Player.objInstance != null 
             &&
-            other.name == Player.objInstance.gameObject.name
+            other.name == Player.objInstance.name
         ) 
         isTriggered = false;
     }
