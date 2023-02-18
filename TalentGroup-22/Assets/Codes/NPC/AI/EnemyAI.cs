@@ -23,6 +23,7 @@ public class EnemyAI : Enemy
     public string lockerNameBeingSearched = null;
     void Start()
     {
+        #region Setup
         pathMaker = GetComponent<Seeker>();
         enemyBody = GetComponent<Rigidbody2D>();
         enemyBody.gravityScale = 0f;
@@ -34,6 +35,7 @@ public class EnemyAI : Enemy
             0f,
             0.5f
         );
+        #endregion
         #region List All Lockers
         lockerName = Player.objInstance.lockerName;
         try
@@ -178,6 +180,15 @@ public class EnemyAI : Enemy
         #endregion
         CheckRange();
     }
+    
+    void CallAfterCalculating(Path calculatedPath)
+    {
+        if (!calculatedPath.error)
+        {
+            pathToTarget = calculatedPath;
+            currentTotalPathLine = 0;
+        }
+    }
     protected override void FollowTarget()
     {
         if 
@@ -205,14 +216,6 @@ public class EnemyAI : Enemy
             basePosition, 
             CallAfterCalculating
         );
-    }
-    void CallAfterCalculating(Path calculatedPath)
-    {
-        if (!calculatedPath.error)
-        {
-            pathToTarget = calculatedPath;
-            currentTotalPathLine = 0;
-        }
     }
     void FixedUpdate()
     {

@@ -4,6 +4,10 @@ using UnityEngine.SceneManagement;
 public class Scene : MonoBehaviour
 {
     protected List<GameObject> gameObjects = new List<GameObject>();
+    protected void UnfreezeTime()
+    {
+        Time.timeScale = 1f;
+    }
     protected virtual void RegisterGameObject(){}
     protected virtual void DisableCertainConditions(){}
     public virtual void EnableAllGameObject()
@@ -14,18 +18,22 @@ public class Scene : MonoBehaviour
     {
         foreach (GameObject gameObj in gameObjects) gameObj.SetActive(false);
     }
+    public void Restart()
+    {
+        PlayerPrefs.DeleteKey("SavedScore");
+        PlayerPrefs.DeleteKey("SavedScene");
+        PlayerPrefs.DeleteKey("Saved");
+        PlayerPrefs.DeleteKey("TimeToLoad");
+        SceneManager.LoadScene
+        (
+            SceneManager.GetActiveScene().buildIndex
+        );
+    }
     public void NextScene()
     {
         SceneManager.LoadScene
         (
             SceneManager.GetActiveScene().buildIndex + 1
-        );
-    }
-    public void Restart()
-    {
-        SceneManager.LoadScene
-        (
-            SceneManager.GetActiveScene().buildIndex
         );
     }
     public void ExitToMainMenu()

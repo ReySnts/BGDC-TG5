@@ -17,11 +17,7 @@ IEndDragHandler
     }
     void OnEnable() 
     {
-        try
-        {
-            ResetPosition();
-        }
-        catch{}
+        if (rectTransform != null) ResetPosition();
     }
     void Start()
     {

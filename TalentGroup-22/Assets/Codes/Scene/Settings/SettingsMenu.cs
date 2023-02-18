@@ -11,11 +11,9 @@ public class SettingsMenu : MonoBehaviour
     public const string MIXER_SFX = "SFXVolume";
     void Awake()
     {
-        objInstance ??= this;
-        if (objInstance != this) Destroy(gameObject);
-    }
-    void OnEnable()
-    {
+        if (objInstance == null) objInstance = this;
+        else if (objInstance != this) Destroy(gameObject);
+        #region Setup
         musicSlider = GameObject.Find("Slider BGM").GetComponent<Slider>();
         sfxSlider = GameObject.Find("Slider SFX").GetComponent<Slider>();
         musicSlider.value = PlayerPrefs.GetFloat
@@ -28,6 +26,7 @@ public class SettingsMenu : MonoBehaviour
             AudioManager.SFX_KEY, 
             AudioManager.defaultValue
         );
+        #endregion
     }
     public void SetMusicVolume()
     {

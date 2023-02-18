@@ -147,4 +147,8 @@ public class Player : MonoBehaviour
         }
         else Enemy.isWaitingToHit = true;
     }
+    void OnDisable()
+    {
+        PlayerData.objInstance.SaveData();
+    }
 }

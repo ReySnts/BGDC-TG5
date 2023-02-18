@@ -40,11 +40,12 @@ public abstract class Enemy : MonoBehaviour
     }
     protected void SuccessFindPlayer()
     {
-        if (Player.objInstance != null) 
+        try
         {
             isChasingPlayer = true;
             target = Player.objInstance.transform;
         }
+        catch {}
     }
     void OnEnable() 
     {
@@ -61,7 +62,7 @@ public abstract class Enemy : MonoBehaviour
     }
     void LateUpdate()
     {
-        if (target != null)
+        try
         {
             if
             (
@@ -123,6 +124,7 @@ public abstract class Enemy : MonoBehaviour
             }
             else ResetSpeed(false);
         }
+        catch {}
     }
     protected abstract void FollowTarget();
     protected abstract void BackToBase();
@@ -168,7 +170,7 @@ public abstract class Enemy : MonoBehaviour
                 BackToBase();
             }
         }
-        catch{}
+        catch {}
     }
     protected void SetAnim
     (
@@ -176,7 +178,7 @@ public abstract class Enemy : MonoBehaviour
         float vertical
     )
     {
-        if (animator != null) 
+        try
         {
             animator.SetFloat
             (
@@ -204,5 +206,6 @@ public abstract class Enemy : MonoBehaviour
                 movement.sqrMagnitude
             );
         }
+        catch {}
     }
 }

@@ -6,18 +6,22 @@ public class Puzzle : MonoBehaviour
     public GameObject uIGameObj = null;
     public bool isStarted = false;
     public bool isSolved = false;
-    const string PuzzleData = "IsPuzzleSolved";
     void Awake()
     {
-        objInstance ??= this;
-        if (objInstance != this) Destroy(gameObject);
+        if (objInstance == null) 
+        {
+            objInstance = this;
+            triggerGameObj = GameObject.Find("DoorTrigger");
+            uIGameObj = GameObject.Find("PuzzleUI");
+            triggerGameObj.SetActive(false);
+            uIGameObj.SetActive(false);
+        }
+        else if (objInstance != this) Destroy(gameObject);
     }
-    void Start()
+    public void Activate()
     {
-        triggerGameObj = GameObject.Find("PuzzleTrigger");
-        uIGameObj = GameObject.Find("PuzzleUI");
-        triggerGameObj.SetActive(false);
-        uIGameObj.SetActive(false);
+        Cursor.lockState = isStarted ? CursorLockMode.None : CursorLockMode.Locked;
+        uIGameObj.SetActive(isStarted);
     }
     void Update() 
     {
@@ -29,7 +33,11 @@ public class Puzzle : MonoBehaviour
                 == 
                 Score.objInstance.maxScore
             )
-            isSolved = true;
+            {
+                isStarted = false;
+                Activate();
+                isSolved = true;
+            }
             else if 
             (
                 Player.objInstance.isTriggeringPuzzle 
@@ -39,7 +47,7 @@ public class Puzzle : MonoBehaviour
             {
                 if (!isStarted) isStarted = true;
                 else isStarted = false;
-                uIGameObj.SetActive(isStarted);
+                Activate();
             }
         }
     }

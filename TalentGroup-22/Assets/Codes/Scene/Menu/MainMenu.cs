@@ -3,8 +3,8 @@ public class MainMenu : Menu
 {
     public static MainMenu objInstance = null;
     const string ShardData = "WasDestroyed";
-    string mainMenu = "MainMenu";
-    string settingsMenu = "SettingsMenu";
+    readonly string mainMenu = "MainMenu";
+    readonly string settingsMenu = "SettingsMenu";
     public override void RegisterMenu()
     {
         menus.Add
@@ -18,9 +18,9 @@ public class MainMenu : Menu
     }
     void Awake()
     {
-        objInstance ??= this;
-        if (objInstance != this) Destroy(gameObject);
-        else RegisterMenu();
+        if (objInstance == null) objInstance = this;
+        else if (objInstance != this) Destroy(gameObject);
+        RegisterMenu();
     }
     public void OpenMenu()
     {
@@ -33,7 +33,6 @@ public class MainMenu : Menu
     void Start()
     {
         OpenMenu();
-      // AudioManager.instance.ChangeBGM();
     }
     public void NewGame() 
     {
@@ -48,7 +47,11 @@ public class MainMenu : Menu
     {
         try
         {
-            PlayerPrefs.SetString(ShardData, "true");
+            PlayerPrefs.SetString
+            (
+                ShardData, 
+                "true"
+            );
             SceneMenu.objInstance.Load();
         }
         catch{}

@@ -6,25 +6,16 @@ public class ShardCollect : MonoBehaviour
     static float lastCollectedTime = 0f;
     readonly float pauseDuration = 1f;
     const string ShardData = "WasDestroyed";
-    public void ResetShard()
-    {
-        PlayerPrefs.DeleteKey
-        (
-            ShardData + transform.position.ToString()
-        );
-    }
     void Start()
     {
-        string WasDestroyed = PlayerPrefs.GetString
+        gameObject.SetActive
         (
-            ShardData + transform.position.ToString()
+            PlayerPrefs.GetString
+            (
+                ShardData + transform.position.ToString()
+            ) 
+            == "true" ? true : false
         );
-        if 
-        (
-            WasDestroyed == "true"
-        ) 
-        gameObject.SetActive(false);
-        else gameObject.SetActive(true);
     }
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -62,13 +53,13 @@ public class ShardCollect : MonoBehaviour
             Input.GetKeyDown(KeyCode.F)
         )
         {
+            Score.objInstance.addScore?.Invoke();
+            AudioManager.instance.ShardCollectSFX();
             PlayerPrefs.SetString
             (
                 ShardData + transform.position.ToString(), 
                 "true"
             );
-            Score.objInstance.addScore?.Invoke();
-            AudioManager.instance.ShardCollectSFX();
             Destroy(gameObject);
         }
     }

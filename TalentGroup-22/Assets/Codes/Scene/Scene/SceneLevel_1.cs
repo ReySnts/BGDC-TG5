@@ -6,13 +6,7 @@ public class SceneLevel_1 : Scene
     GameObject introScreen = null;
     void DisableCertainConditions(GameObject gameObject)
     {
-        if 
-        (
-            gameObject.name == "PuzzleUI" 
-            && 
-            !Puzzle.objInstance.isStarted
-        )
-        gameObject.SetActive(false);
+        if (gameObject == Puzzle.objInstance.uIGameObj) Puzzle.objInstance.Activate();
     }
     public override void EnableAllGameObject()
     {
@@ -22,7 +16,7 @@ public class SceneLevel_1 : Scene
             DisableCertainConditions(gameObj);
         }
     }
-    IEnumerator DisableAfterAwake()
+    IEnumerator DisableFrameAfterAwake()
     {
         yield return new WaitForEndOfFrame();
         DisableAllGameObject();
@@ -68,14 +62,15 @@ public class SceneLevel_1 : Scene
         #endregion
         StartCoroutine
         (
-            DisableAfterAwake()
+            DisableFrameAfterAwake()
         );
     }
     void Awake()
     {
-        objInstance ??= this;
-        if (objInstance != this) Destroy(gameObject);
-        else RegisterGameObject();
+        if (objInstance == null) objInstance = this;
+        else if (objInstance != this) Destroy(gameObject);
+        UnfreezeTime();
+        RegisterGameObject();
     }
     void FadeIntroScreen()
     {

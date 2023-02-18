@@ -3,7 +3,7 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     bool isOpened = false;
-    IEnumerator LoadCredits()
+    IEnumerator LoadChoices()
     {
         yield return new WaitForSeconds(2f);
         SceneLevel_1.objInstance.NextScene();
@@ -22,10 +22,10 @@ public class Door : MonoBehaviour
         )
         {
             isOpened = true;
-            AudioManager.instance.DoorSFX();
+            AudioManager.instance.DoorOpen();
             StartCoroutine
             (
-                LoadCredits()
+                LoadChoices()
             );
         }
     }

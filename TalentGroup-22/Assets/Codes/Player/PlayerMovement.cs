@@ -12,13 +12,13 @@ public class PlayerMovement : MonoBehaviour
     Vector2 movement = Vector2.zero;
     void Awake()
     {
-        if (objInstance == null) objInstance = this;
+        if (objInstance == null) 
+        {
+            objInstance = this;
+            playerRigidbody = Player.objInstance.GetComponent<Rigidbody2D>();
+            playerAnimator = Player.objInstance.GetComponent<Animator>();
+        }
         else if (objInstance != this) Destroy(gameObject);
-    }
-    void Start()
-    {
-        playerRigidbody = Player.objInstance.GetComponent<Rigidbody2D>();
-        playerAnimator = Player.objInstance.GetComponent<Animator>();
     }
     void Update()
     {

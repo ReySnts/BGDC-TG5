@@ -11,39 +11,24 @@ public class Score : MonoBehaviour
     public readonly int maxScore = 7;
     int score = 0;
     bool isMaxed = false;
-    float restartTime = 5.0f;
-    
     void Awake()
     {
         if (objInstance == null) objInstance = this;
         else if (objInstance != this) Destroy(gameObject);
+        scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
     }
-
-    public void AddScore()
+    void OnEnable()
+    {
+        addScore += AddScore;
+    }
+    void AddScore()
     {
         score++;
-        PlayerPrefs.SetInt("SavedScore", score);
-        
         PlayerPrefs.SetInt
         (
             "SavedScore", 
             score
         );
-    }
-    void Start()
-    {
-        addScore += AddScore;
-        score = PlayerPrefs.GetInt
-        (
-            "SavedScore", 
-            0
-        );
-        scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
-    }
-    IEnumerator RestartLevel()
-    {
-        yield return new WaitForSeconds(restartTime);
-        SceneLevel_1.objInstance.Restart();
     }
     void Update()
     {
@@ -52,8 +37,6 @@ public class Score : MonoBehaviour
             "SavedScore",
             0
         );
-        scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
-        scoreText.text = score.ToString();
         if
         (
             !isMaxed

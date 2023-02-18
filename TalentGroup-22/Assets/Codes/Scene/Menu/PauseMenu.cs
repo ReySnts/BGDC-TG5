@@ -19,9 +19,9 @@ public class PauseMenu : Menu
     }
     void Awake()
     {
-        objInstance ??= this;
-        if (objInstance != this) Destroy(gameObject);
-        else RegisterMenu();
+        if (objInstance == null) objInstance = this;
+        else if (objInstance != this) Destroy(gameObject);
+        RegisterMenu();
     }
     public void OpenPause()
     {
@@ -31,21 +31,24 @@ public class PauseMenu : Menu
             else menu.SetActive(false);
         }
     }
+    void Activate()
+    {
+        Cursor.lockState = hasPaused ? CursorLockMode.None : CursorLockMode.Locked;
+        Time.timeScale = hasPaused ? 0f : 1f;
+    }
     public void Pause()
     {
         hasPaused = true;
         SceneLevel_1.objInstance.DisableAllGameObject();
         OpenPause();
-        Cursor.lockState = CursorLockMode.None;
-        Time.timeScale = 0f;
+        Activate();
     }
     public void Resume()
     {
         hasPaused = false;
         DisableAllMenu();
+        Activate();
         SceneLevel_1.objInstance.EnableAllGameObject();
-        Cursor.lockState = CursorLockMode.Locked;
-        Time.timeScale = 1f;
     }
     void Update()
     {
@@ -67,13 +70,5 @@ public class PauseMenu : Menu
             if (menu.name == settingInGame) menu.SetActive(true);
             else menu.SetActive(false);
         }
-    }
-    public void Restart()
-    {
-        PlayerPrefs.DeleteKey("SavedScore");
-        PlayerPrefs.DeleteKey("SavedScene");
-        PlayerPrefs.DeleteKey("Saved");
-        PlayerPrefs.DeleteKey("TimeToLoad");
-        SceneLevel_1.objInstance.Restart();
     }
 }

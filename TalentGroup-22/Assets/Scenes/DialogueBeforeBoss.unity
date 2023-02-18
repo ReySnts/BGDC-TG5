@@ -1267,7 +1267,7 @@ MonoBehaviour:
   characterIcon: {fileID: 1252237823}
   realMom: {fileID: 323394371}
   choiceHolder: {fileID: 1445174564}
-  choiceBasePrefab: {fileID: 0}
+  choiceBasePrefab: {fileID: 8067390607867335605, guid: 8889b1d7a75846a4ea0a9799bc2954e4, type: 3}
   continueButton: {fileID: 2043198362}
 --- !u!1 &1800474430
 GameObject:

@@ -7,7 +7,6 @@ public class PlayerHealth : MonoBehaviour
     GameObject bloodObject = null;
     Image bloodImage = null;
     Animator bloodAnimator = null;
-    readonly string bloodObjectName = "Blood";
     public float currentHealth = 0f;
     public float minimumHealth = 0f;
     float maximumHealth = 100f;
@@ -16,15 +15,15 @@ public class PlayerHealth : MonoBehaviour
     bool isRegen = false;
     void Awake()
     {
-        if (objInstance == null) objInstance = this;
+        if (objInstance == null) 
+        {
+            objInstance = this;
+            bloodObject = GameObject.Find("Blood");
+            bloodImage = bloodObject.GetComponent<Image>();
+            bloodAnimator = bloodObject.GetComponent<Animator>();
+            currentHealth = maximumHealth;
+        }
         else if (objInstance != this) Destroy(gameObject);
-    }
-    void Start()
-    {
-        bloodObject = GameObject.Find(bloodObjectName);
-        bloodImage = bloodObject.GetComponent<Image>();
-        bloodAnimator = bloodObject.GetComponent<Animator>();
-        currentHealth = maximumHealth;
     }
     IEnumerator HoldRegen()
     {

@@ -11,7 +11,14 @@ public class PlayerHide : MonoBehaviour
     public bool hasClicked = false;
     void Awake()
     {
-        if (objInstance == null) objInstance = this;
+        if (objInstance == null) 
+        {
+            objInstance = this;
+            playerMovementObject = GameObject.Find("PlayerMovement");
+            playerSprite = Player.objInstance.GetComponent<SpriteRenderer>();
+            playerBoxCollider = Player.objInstance.GetComponent<BoxCollider2D>();
+            Fail();
+        }
         else if (objInstance != this) Destroy(gameObject);
     }
     void Success()
@@ -32,13 +39,6 @@ public class PlayerHide : MonoBehaviour
     {
         fail += Fail;
         success += Success;
-    }
-    void Start()
-    {
-        playerMovementObject = GameObject.Find("PlayerMovement");
-        playerSprite = Player.objInstance.GetComponent<SpriteRenderer>();
-        playerBoxCollider = Player.objInstance.GetComponent<BoxCollider2D>();
-        Fail();
     }
     void Update()
     {

@@ -5,9 +5,10 @@ public class SceneMenu : Scene
     public static SceneMenu objInstance = null;
     void Awake()
     {
-        objInstance ??= this;
-        if (objInstance != this) Destroy(gameObject);
-        else RegisterGameObject();
+        if (objInstance == null) objInstance = this;
+        else if (objInstance != this) Destroy(gameObject);
+        UnfreezeTime();
+        RegisterGameObject();
     }
     public void StartNewGame()
     {
