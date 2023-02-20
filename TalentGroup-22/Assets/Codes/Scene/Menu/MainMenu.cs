@@ -36,25 +36,11 @@ public class MainMenu : Menu
     }
     public void NewGame() 
     {
-        Time.timeScale = 1f;
-        PlayerPrefs.DeleteKey("SavedScore");
-        PlayerPrefs.DeleteKey("SavedScene");
-        PlayerPrefs.DeleteKey("Saved");
-        PlayerPrefs.DeleteKey("TimeToLoad"); 
         SceneMenu.objInstance.StartNewGame();
     }
     public void LoadGame()
     {
-        try
-        {
-            PlayerPrefs.SetString
-            (
-                ShardData, 
-                "true"
-            );
-            SceneMenu.objInstance.Load();
-        }
-        catch{}
+        SceneMenu.objInstance.Load();
     }
     public void OpenSettings()
     {

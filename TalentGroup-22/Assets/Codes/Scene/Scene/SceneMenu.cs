@@ -12,6 +12,7 @@ public class SceneMenu : Scene
     }
     public void StartNewGame()
     {
+        PlayerPrefs.DeleteAll();
         SceneManager.LoadScene(1);
     }
     public void Load()

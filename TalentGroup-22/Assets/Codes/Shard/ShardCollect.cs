@@ -1,21 +1,59 @@
+using System;
 using UnityEngine;
 public class ShardCollect : MonoBehaviour
 {
     public static ShardCollect instance = null;
     bool isTriggered = false;
+    bool isDone = false;
     static float lastCollectedTime = 0f;
     readonly float pauseDuration = 1f;
-    const string ShardData = "WasDestroyed";
+    string objectName = "Shard (";
+    string getKey = null;
+    int objectIndex = 0;
     void Start()
     {
-        gameObject.SetActive
+        #region Get Object Index
+        objectIndex = Int32.Parse
         (
-            PlayerPrefs.GetString
+            gameObject.name.Substring
             (
-                ShardData + transform.position.ToString()
-            ) 
-            == "true" ? true : false
+                objectName.Length,
+                1
+            )
         );
+        #endregion
+        #region Check Key
+        try
+        {
+            getKey = PlayerPrefs.GetString
+            (
+                ShardData.key 
+                + 
+                objectIndex
+            );
+        }
+        catch
+        {
+            getKey = null;
+        }
+        #endregion
+        if (getKey != null)
+        {
+            #region Activate
+            if (getKey == "1") gameObject.SetActive(true);
+            else if (getKey == "0") gameObject.SetActive(false);
+            #endregion
+        }
+        else 
+        {
+            #region Register Shard
+            ShardData.objInstance.registerShard?.Invoke
+            (
+                gameObject, 
+                objectIndex
+            );
+            #endregion
+        }
     }
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -48,19 +86,21 @@ public class ShardCollect : MonoBehaviour
     {
         if 
         (
+            !isDone 
+            && 
             isTriggered 
             && 
             Input.GetKeyDown(KeyCode.F)
         )
         {
+            isDone = true;
             Score.objInstance.addScore?.Invoke();
             AudioManager.instance.ShardCollectSFX();
-            PlayerPrefs.SetString
+            ShardData.objInstance.disactivateShard?.Invoke
             (
-                ShardData + transform.position.ToString(), 
-                "true"
+                gameObject, 
+                objectIndex
             );
-            Destroy(gameObject);
         }
     }
 }

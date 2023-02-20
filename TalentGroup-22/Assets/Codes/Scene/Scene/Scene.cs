@@ -20,10 +20,13 @@ public class Scene : MonoBehaviour
     }
     public void Restart()
     {
+        #region Delete Keys
         PlayerPrefs.DeleteKey("SavedScore");
         PlayerPrefs.DeleteKey("SavedScene");
         PlayerPrefs.DeleteKey("Saved");
         PlayerPrefs.DeleteKey("TimeToLoad");
+        #endregion
+        ShardData.objInstance.ResetAll();
         SceneManager.LoadScene
         (
             SceneManager.GetActiveScene().buildIndex
