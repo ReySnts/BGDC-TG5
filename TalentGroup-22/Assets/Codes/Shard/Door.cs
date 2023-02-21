@@ -12,10 +12,10 @@ public class Door : MonoBehaviour
     {
         if 
         (
-            !isOpened
-            &&
-            Player.objInstance.isTriggeringPuzzle
-            &&
+            !isOpened 
+            && 
+            Player.objInstance.isTriggeringPuzzle 
+            && 
             Puzzle.objInstance.isSolved 
             && 
             Input.GetKeyDown(KeyCode.E)

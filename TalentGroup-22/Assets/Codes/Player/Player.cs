@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     {
         try
         {
+            #region Enemy AI
             if 
             (
                 other.gameObject.name.Substring
@@ -38,6 +39,8 @@ public class Player : MonoBehaviour
                 == enemyName
             )
             isCollidingEnemy = true;
+            #endregion
+            #region Locker
             if 
             (
                 other.gameObject.name.Substring
@@ -50,7 +53,9 @@ public class Player : MonoBehaviour
             {
                 isCollidingLocker = true;
                 lockerFullName = other.gameObject.name;
+                PlayerHide.objInstance.lockerSpriteRenderer = other.gameObject.GetComponent<SpriteRenderer>();
             }
+            #endregion
         }
         catch{}
     }
@@ -58,6 +63,7 @@ public class Player : MonoBehaviour
     {
         try
         {
+            #region Enemy AI
             if 
             (
                 other.gameObject.name.Substring
@@ -68,6 +74,8 @@ public class Player : MonoBehaviour
                 == enemyName
             )
             isCollidingEnemy = false;
+            #endregion
+            #region Locker
             if 
             (
                 other.gameObject.name.Substring
@@ -77,7 +85,11 @@ public class Player : MonoBehaviour
                 )
                 == lockerName
             )
-            isCollidingLocker = false;
+            {
+                isCollidingLocker = false;
+                PlayerHide.objInstance.lockerSpriteRenderer = null;
+            }
+            #endregion
         }
         catch{}
     }
@@ -85,6 +97,7 @@ public class Player : MonoBehaviour
     {
         try 
         {
+            #region EnemyGhost
             if 
             (
                 other.gameObject.name.Substring
@@ -95,6 +108,8 @@ public class Player : MonoBehaviour
                 == enemyGhostName
             )
             isTriggeringEnemyGhost = true;
+            #endregion
+            #region DoorTrigger
             if 
             (
                 other.gameObject.name
@@ -102,6 +117,7 @@ public class Player : MonoBehaviour
                 Puzzle.objInstance.triggerGameObj.name
             ) 
             isTriggeringPuzzle = true;
+            #endregion
         }
         catch {}
     }
@@ -109,6 +125,7 @@ public class Player : MonoBehaviour
     {
         try 
         {
+            #region EnemyGhost
             if 
             (
                 other.gameObject.name.Substring
@@ -119,6 +136,8 @@ public class Player : MonoBehaviour
                 == enemyGhostName
             )
             isTriggeringEnemyGhost = false;
+            #endregion
+            #region DoorTrigger
             if 
             (
                 other.gameObject.name
@@ -126,11 +145,13 @@ public class Player : MonoBehaviour
                 Puzzle.objInstance.triggerGameObj.name
             ) 
             isTriggeringPuzzle = false;
+            #endregion
         }
         catch {}
     }
     void Update() 
     {
+        #region EnemyGhost
         if 
         (
             !PlayerHealth.objInstance.isDie
@@ -140,12 +161,15 @@ public class Player : MonoBehaviour
             isTriggeringEnemyGhost
         ) 
         PlayerHide.objInstance.fail?.Invoke();
+        #endregion
+        #region EnemyGhostBoss
         if (Splash.hasHitPlayer) 
         {
             Splash.hasHitPlayer = false;
             Enemy.isWaitingToHit = false;
         }
         else Enemy.isWaitingToHit = true;
+        #endregion
     }
     void OnDisable()
     {

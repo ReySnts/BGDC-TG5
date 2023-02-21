@@ -68,13 +68,6 @@ public class ShardData : MonoBehaviour
         )
         ActivateShard(index);
         #endregion
-        // #region Reset Score
-        // PlayerPrefs.SetInt
-        // (
-        //     "SavedScore", 
-        //     0
-        // );
-        // #endregion
     }
     void OnEnable()
     {

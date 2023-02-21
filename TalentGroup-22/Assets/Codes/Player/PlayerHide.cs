@@ -5,10 +5,12 @@ public class PlayerHide : MonoBehaviour
     public delegate void Hide();
     public Hide fail = null;
     public Hide success = null;
+    public SpriteRenderer lockerSpriteRenderer = null;
     SpriteRenderer playerSprite = null;
     BoxCollider2D playerBoxCollider = null;
     GameObject playerMovementObject = null;
     public bool hasClicked = false;
+    string spritePath = "Sprites/";
     void Awake()
     {
         if (objInstance == null) 
@@ -49,6 +51,12 @@ public class PlayerHide : MonoBehaviour
         {
             if (hasClicked) Fail();
             else if (Player.objInstance.isCollidingLocker) Success();
+            #region Change Locker Sprite
+            lockerSpriteRenderer.sprite = hasClicked ? 
+            Resources.Load<Sprite>(spritePath + "Locker Used") : 
+            Resources.Load<Sprite>(spritePath + "Locker Unused");
+            #endregion
+            AudioManager.instance.DoorOpen();
         }
     }
     void OnDisable()
