@@ -2,9 +2,9 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Wake Up!"
-#define MyAppVersion "0.0.3"
-#define MyAppPublisher "Mama Boss Productions"
-#define MyAppURL "https://github.com/ReySnts/TG5-WakeUp"
+#define MyAppVersion "1.0.1"
+#define MyAppPublisher "Tooroo Studio"
+#define MyAppURL "https://bgdc.itch.io/wake-up"
 #define MyAppExeName "Wake Up!.exe"
 #define MyAppAssocName MyAppName + " File"
 #define MyAppAssocExt ".myp"
@@ -13,7 +13,7 @@
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{FEAE98A6-AF63-405C-967F-AD6F03572582}
+AppId={{0E4F0545-DBCC-43B0-A2C2-1C5D15E9F381}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}

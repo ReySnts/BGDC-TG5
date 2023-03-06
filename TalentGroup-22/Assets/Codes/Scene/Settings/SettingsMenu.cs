@@ -1,10 +1,8 @@
-using UnityEngine.Audio;
 using UnityEngine;
 using UnityEngine.UI;
 public class SettingsMenu : MonoBehaviour
 {
     public static SettingsMenu objInstance = null;
-    [SerializeField] AudioMixer mixer;
     [SerializeField] Slider musicSlider;
     [SerializeField] Slider sfxSlider;
     public const string MIXER_MUSIC = "MusicVolume";
@@ -16,6 +14,8 @@ public class SettingsMenu : MonoBehaviour
         #region Setup
         musicSlider = GameObject.Find("Slider BGM").GetComponent<Slider>();
         sfxSlider = GameObject.Find("Slider SFX").GetComponent<Slider>();
+        musicSlider.minValue = sfxSlider.minValue = -80f;
+        musicSlider.maxValue = sfxSlider.maxValue = 20f;
         musicSlider.value = PlayerPrefs.GetFloat
         (
             AudioManager.MUSIC_KEY, 
@@ -30,19 +30,25 @@ public class SettingsMenu : MonoBehaviour
     }
     public void SetMusicVolume()
     {
-        mixer.SetFloat
-        (
-            MIXER_MUSIC, 
-            Mathf.Log10(musicSlider.value) * AudioManager.multiplier
-        );
+        if (AudioManager.instance != null) 
+        {
+            AudioManager.instance.mixer.SetFloat
+            (
+                MIXER_MUSIC, 
+                musicSlider.value
+            );
+        }
     }
     public void SetSFXVolume()
     {
-        mixer.SetFloat
-        (
-            MIXER_SFX, 
-            Mathf.Log10(sfxSlider.value) * AudioManager.multiplier
-        );
+        if (AudioManager.instance != null) 
+        {
+            AudioManager.instance.mixer.SetFloat
+            (
+                MIXER_SFX, 
+                sfxSlider.value
+            );
+        }
     }
     void OnDisable()
     {

@@ -13,7 +13,6 @@ public class SceneCredits : Scene
     }
     IEnumerator LoadCredits()
     {
-        animator.SetTrigger("Start");
         yield return new WaitForSeconds(transitionTime);
         SceneCredits.objInstance.ExitToMainMenu();
     }

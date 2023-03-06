@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 public class Player : MonoBehaviour
 {
@@ -5,11 +6,14 @@ public class Player : MonoBehaviour
     public bool isCollidingEnemy = false;
     public bool isCollidingLocker = false;
     public bool isTriggeringEnemyGhost = false;
-    public bool isTriggeringPuzzle = false;
+    public bool isTriggeringDoor = false;
+    public bool isTriggeringPortal = false;
+    bool hasLoadedChoices = false;
     public readonly string lockerName = "Locker";
     public string lockerFullName = null;
     readonly string enemyName = "Enemy";
     readonly string enemyGhostName = "EnemyGhost";
+    readonly string portalName = "Portal";
     int enemyLen = 0;
     int enemyGhostLen = 0;
     int lockerLen = 0;
@@ -97,6 +101,15 @@ public class Player : MonoBehaviour
     {
         try 
         {
+            #region Portal
+            if 
+            (
+                other.gameObject.name 
+                == 
+                portalName
+            ) 
+            isTriggeringPortal = true;
+            #endregion
             #region EnemyGhost
             if 
             (
@@ -116,7 +129,7 @@ public class Player : MonoBehaviour
                 ==
                 Puzzle.objInstance.triggerGameObj.name
             ) 
-            isTriggeringPuzzle = true;
+            isTriggeringDoor = true;
             #endregion
         }
         catch {}
@@ -125,6 +138,15 @@ public class Player : MonoBehaviour
     {
         try 
         {
+            #region Portal
+            if 
+            (
+                other.gameObject.name 
+                == 
+                portalName
+            ) 
+            isTriggeringPortal = false;
+            #endregion
             #region EnemyGhost
             if 
             (
@@ -144,13 +166,34 @@ public class Player : MonoBehaviour
                 ==
                 Puzzle.objInstance.triggerGameObj.name
             ) 
-            isTriggeringPuzzle = false;
+            isTriggeringDoor = false;
             #endregion
         }
         catch {}
     }
+    IEnumerator LoadChoices()
+    {
+        yield return new WaitForSeconds(2f);
+        SceneLevel_1.objInstance.NextScene();
+    }
     void Update() 
     {
+        #region Portal
+        if 
+        (
+            isTriggeringPortal 
+            && 
+            !hasLoadedChoices
+        ) 
+        {
+            hasLoadedChoices = true;
+            AudioManager.instance.NotifDoor();
+            StartCoroutine
+            (
+                LoadChoices()
+            );
+        }
+        #endregion
         #region EnemyGhost
         if 
         (

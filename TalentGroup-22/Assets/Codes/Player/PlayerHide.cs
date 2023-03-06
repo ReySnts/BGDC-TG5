@@ -46,6 +46,8 @@ public class PlayerHide : MonoBehaviour
     {
         if 
         (
+            Player.objInstance.isCollidingLocker 
+            && 
             Input.GetKeyDown(KeyCode.E)
         )
         {

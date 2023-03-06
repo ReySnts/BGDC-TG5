@@ -3,6 +3,7 @@ using UnityEngine;
 public class ShardCollect : MonoBehaviour
 {
     public static ShardCollect instance = null;
+    GameObject coordinate = null;
     bool isTriggered = false;
     bool isDone = false;
     static float lastCollectedTime = 0f;
@@ -10,6 +11,10 @@ public class ShardCollect : MonoBehaviour
     string objectName = "Shard (";
     string getKey = null;
     int objectIndex = 0;
+    void EnableCoordinate()
+    {
+        coordinate.SetActive(true);
+    }
     void Start()
     {
         #region Get Object Index
@@ -21,6 +26,13 @@ public class ShardCollect : MonoBehaviour
                 1
             )
         );
+        #endregion
+        #region Set Coordinate
+        coordinate = GameObject.Find
+        (
+            "Coordinate (" + objectIndex + ")"
+        );
+        coordinate.SetActive(false);
         #endregion
         #region Check Key
         try
@@ -41,7 +53,11 @@ public class ShardCollect : MonoBehaviour
         {
             #region Activate
             if (getKey == "1") gameObject.SetActive(true);
-            else if (getKey == "0") gameObject.SetActive(false);
+            else if (getKey == "0") 
+            {
+                EnableCoordinate();
+                gameObject.SetActive(false);
+            }
             #endregion
         }
         else 
@@ -94,6 +110,7 @@ public class ShardCollect : MonoBehaviour
         )
         {
             isDone = true;
+            EnableCoordinate();
             Score.objInstance.addScore?.Invoke();
             AudioManager.instance.ShardCollectSFX();
             ShardData.objInstance.disactivateShard?.Invoke

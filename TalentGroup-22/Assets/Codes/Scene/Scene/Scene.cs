@@ -9,10 +9,14 @@ public class Scene : MonoBehaviour
         Time.timeScale = 1f;
     }
     protected virtual void RegisterGameObject(){}
-    protected virtual void DisableCertainConditions(){}
-    public virtual void EnableAllGameObject()
+    protected virtual void DisableCertainConditions(GameObject gameObject){}
+    public void EnableAllGameObject()
     {
-        foreach (GameObject gameObj in gameObjects) gameObj.SetActive(true);
+        foreach (GameObject gameObj in gameObjects) 
+        {
+            gameObj.SetActive(true);
+            DisableCertainConditions(gameObj);
+        }
     }
     public void DisableAllGameObject()
     {

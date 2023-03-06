@@ -7,7 +7,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
 
     // variable for audio
-    [SerializeField] AudioMixer mixer;
+    public AudioMixer mixer;
     [SerializeField] AudioSource SFXSource;
     [SerializeField] AudioSource PlayerWalkSource;
     [SerializeField] AudioSource PlayerRunSource;
@@ -27,8 +27,7 @@ public class AudioManager : MonoBehaviour
     // var for saving value
     public const string MUSIC_KEY = "musicVolume";
     public const string SFX_KEY = "sfxVolume";
-    public const float defaultValue = 1f;
-    public const float multiplier = 20f;
+    public const float defaultValue = 0f;
 
     // vars for checking player condition
     bool isOpen;
@@ -87,6 +86,8 @@ public class AudioManager : MonoBehaviour
         (
             Resources.Load<AudioClip>(sFXResourcesPath + "Crystal")
         );
+        PlayerWalkSource.clip = Resources.Load<AudioClip>(sFXResourcesPath + "walk");
+        PlayerRunSource.clip = Resources.Load<AudioClip>(sFXResourcesPath + "run");
         #endregion
         #region List BGM
         bgmClip.Clear();
@@ -129,12 +130,12 @@ public class AudioManager : MonoBehaviour
         mixer.SetFloat
         (
             SettingsMenu.MIXER_MUSIC, 
-            Mathf.Log10(musicVolume) * multiplier
+            musicVolume
         );
         mixer.SetFloat
         (
             SettingsMenu.MIXER_SFX, 
-            Mathf.Log10(sfxVolume) * multiplier
+            sfxVolume
         );
         #endregion
     }

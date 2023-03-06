@@ -20,20 +20,20 @@ public class EnemyAI : Enemy
     List<Transform> lockers = new List<Transform>();
     List<Transform> lockersInRange = new List<Transform>();
     string lockerName = null;
-    public string lockerNameBeingSearched = null;
+    string lockerNameBeingSearched = null;
     void Start()
     {
         #region Setup
         pathMaker = GetComponent<Seeker>();
         enemyBody = GetComponent<Rigidbody2D>();
         enemyBody.gravityScale = 0f;
-        minRange = wayPointDistance;
+        minRange = minRange * 4f / 3f;
         maxRange *= 2f;
         InvokeRepeating
         (
             "UpdatePathOverTime",
             0f,
-            0.5f
+            0.1875f
         );
         #endregion
         #region List All Lockers
@@ -180,7 +180,6 @@ public class EnemyAI : Enemy
         #endregion
         CheckRange();
     }
-    
     void CallAfterCalculating(Path calculatedPath)
     {
         if (!calculatedPath.error)

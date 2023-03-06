@@ -2,7 +2,6 @@ using UnityEngine;
 public class MainMenu : Menu
 {
     public static MainMenu objInstance = null;
-    const string ShardData = "WasDestroyed";
     readonly string mainMenu = "MainMenu";
     readonly string settingsMenu = "SettingsMenu";
     public override void RegisterMenu()

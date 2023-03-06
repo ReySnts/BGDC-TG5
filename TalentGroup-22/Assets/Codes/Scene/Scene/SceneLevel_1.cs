@@ -3,18 +3,12 @@ using UnityEngine;
 public class SceneLevel_1 : Scene
 {
     public static SceneLevel_1 objInstance = null;
+    GameObject controlScreen = null;
     GameObject introScreen = null;
-    void DisableCertainConditions(GameObject gameObject)
+    float waitTime = 4f;
+    protected override void DisableCertainConditions(GameObject gameObject)
     {
         if (gameObject == Puzzle.objInstance.uIGameObj) Puzzle.objInstance.Activate();
-    }
-    public override void EnableAllGameObject()
-    {
-        foreach (GameObject gameObj in gameObjects) 
-        {
-            gameObj.SetActive(true);
-            DisableCertainConditions(gameObj);
-        }
     }
     IEnumerator DisableFrameAfterAwake()
     {
@@ -72,24 +66,32 @@ public class SceneLevel_1 : Scene
         UnfreezeTime();
         RegisterGameObject();
     }
-    void FadeIntroScreen()
+    IEnumerator WaitLevel()
     {
+        yield return new WaitForSeconds(waitTime);
         EnableAllGameObject();
         PauseMenu.objInstance.canBeAccessed = true;
         introScreen.SetActive(false);
     }
-    IEnumerator WaitToFade()
+    IEnumerator WaitIntro()
     {
-        yield return new WaitForSeconds(4f);
-        FadeIntroScreen();
+        yield return new WaitForSeconds(waitTime);
+        controlScreen.SetActive(false);
+        introScreen.SetActive(true);
+        StartCoroutine(
+            WaitLevel()
+        );
     }
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        controlScreen = GameObject.Find("Control");
         introScreen = GameObject.Find("Intro");
-        introScreen.SetActive(true);
-        StartCoroutine(
-            WaitToFade()
+        introScreen.SetActive(false);
+        controlScreen.SetActive(true);
+        StartCoroutine
+        (
+            WaitIntro()
         );
     }
 }

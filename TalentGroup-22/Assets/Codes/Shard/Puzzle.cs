@@ -40,7 +40,7 @@ public class Puzzle : MonoBehaviour
             }
             else if 
             (
-                Player.objInstance.isTriggeringPuzzle 
+                Player.objInstance.isTriggeringDoor 
                 && 
                 Input.GetKeyDown(KeyCode.E)
             )

@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 public abstract class Enemy : MonoBehaviour
 {
-    protected Transform target = null;
+    public Transform target = null;
     protected Animator animator = null;
     public float minRange = 1.125f;
     public float maxRange = 5f;
@@ -50,6 +50,8 @@ public abstract class Enemy : MonoBehaviour
     void OnEnable() 
     {
         animator = GetComponent<Animator>();
+        maxRange = transform.localScale.x * 25f;
+        minRange = maxRange * 9f / 40f;
         basePosition = transform.position;
         isWaitingToHit = false;
         ResetSpeed(true);

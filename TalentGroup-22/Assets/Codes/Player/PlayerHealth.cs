@@ -12,7 +12,7 @@ public class PlayerHealth : MonoBehaviour
     float maximumHealth = 100f;
     float regenAmount = 5f;
     public bool isDie = false;
-    bool isRegen = false;
+    public bool isRegen = false;
     void Awake()
     {
         if (objInstance == null) 
@@ -28,6 +28,7 @@ public class PlayerHealth : MonoBehaviour
     IEnumerator HoldRegen()
     {
         yield return new WaitForSeconds(1f);
+        isRegen = false;
         currentHealth += regenAmount;
         if 
         (
@@ -36,7 +37,6 @@ public class PlayerHealth : MonoBehaviour
             Player.objInstance.isTriggeringEnemyGhost
         ) 
         currentHealth -= regenAmount;
-        isRegen = false;
     }
     IEnumerator HoldRestart()
     {
@@ -45,16 +45,7 @@ public class PlayerHealth : MonoBehaviour
     }
     void Update()
     {
-        bloodAnimator.SetFloat
-        (
-            "currentHealth",
-            currentHealth = Mathf.Clamp
-            (
-                currentHealth,
-                minimumHealth,
-                maximumHealth
-            )
-        );
+        #region Set Die
         if
         (
             !isDie
@@ -70,11 +61,8 @@ public class PlayerHealth : MonoBehaviour
                 HoldRestart()
             );
         }
-        bloodAnimator.SetBool
-        (
-            "isDie",
-            isDie
-        );
+        #endregion
+        #region Regen
         if (!isRegen) 
         {
             isRegen = true;
@@ -83,10 +71,28 @@ public class PlayerHealth : MonoBehaviour
                 HoldRegen()
             );
         }
+        #endregion
+        #region Set Blood Anim
+        bloodAnimator.SetFloat
+        (
+            "currentHealth",
+            currentHealth = Mathf.Clamp
+            (
+                currentHealth,
+                minimumHealth,
+                maximumHealth
+            )
+        );
         bloodAnimator.SetBool
         (
             "isWaitingToHit",
             Enemy.isWaitingToHit
         );
+        bloodAnimator.SetBool
+        (
+            "isDie",
+            isDie
+        );
+        #endregion
     }
 }
