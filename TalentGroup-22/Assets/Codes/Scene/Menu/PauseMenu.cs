@@ -49,6 +49,7 @@ public class PauseMenu : Menu
         DisableAllMenu();
         Activate();
         SceneLevel_1.objInstance.EnableAllGameObject();
+        Puzzle.objInstance.Activate();
     }
     void Update()
     {

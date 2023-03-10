@@ -8,7 +8,6 @@ public class SceneMenu : Scene
         if (objInstance == null) objInstance = this;
         else if (objInstance != this) Destroy(gameObject);
         UnfreezeTime();
-        RegisterGameObject();
     }
     public void StartNewGame()
     {

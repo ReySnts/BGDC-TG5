@@ -6,9 +6,21 @@ public class SceneLevel_1 : Scene
     GameObject controlScreen = null;
     GameObject introScreen = null;
     float waitTime = 4f;
-    protected override void DisableCertainConditions(GameObject gameObject)
+    public override void EnableAllGameObject()
     {
-        if (gameObject == Puzzle.objInstance.uIGameObj) Puzzle.objInstance.Activate();
+        PlayerMovement.objInstance.enabled = true;
+        PlayerHealth.objInstance.enabled = true;
+        PlayerHide.objInstance.enabled = true;
+        Puzzle.objInstance.enabled = true;
+        Score.objInstance.enabled = true;
+    }
+    public override void DisableAllGameObject()
+    {
+        PlayerMovement.objInstance.enabled = false;
+        PlayerHealth.objInstance.enabled = false;
+        PlayerHide.objInstance.enabled = false;
+        Puzzle.objInstance.enabled = false;
+        Score.objInstance.enabled = false;
     }
     IEnumerator DisableFrameAfterAwake()
     {
@@ -16,55 +28,15 @@ public class SceneLevel_1 : Scene
         DisableAllGameObject();
         PauseMenu.objInstance.DisableAllMenu();
     }
-    protected override void RegisterGameObject()
-    {
-        #region List Singletons
-        gameObjects.Add
-        (
-            GameObject.Find("PlayerMovement")  
-        );
-        gameObjects.Add
-        (
-            GameObject.Find("PlayerHealth")  
-        );
-        gameObjects.Add
-        (
-            GameObject.Find("PlayerHide")  
-        );
-        gameObjects.Add
-        (
-            GameObject.Find("Score")  
-        );
-        gameObjects.Add
-        (
-            GameObject.Find("Puzzle")  
-        );
-        #endregion
-        #region List UIs
-        gameObjects.Add
-        (
-            GameObject.Find("ScoreUI")
-        );
-        gameObjects.Add
-        (
-            GameObject.Find("Blood")
-        );
-        gameObjects.Add
-        (
-            GameObject.Find("PuzzleUI")  
-        );
-        #endregion
-        StartCoroutine
-        (
-            DisableFrameAfterAwake()
-        );
-    }
     void Awake()
     {
         if (objInstance == null) objInstance = this;
         else if (objInstance != this) Destroy(gameObject);
         UnfreezeTime();
-        RegisterGameObject();
+        StartCoroutine
+        (
+            DisableFrameAfterAwake()
+        );
     }
     IEnumerator WaitLevel()
     {
@@ -93,5 +65,9 @@ public class SceneLevel_1 : Scene
         (
             WaitIntro()
         );
+    }
+    void OnDisable()
+    {
+        Cursor.lockState = CursorLockMode.None;
     }
 }

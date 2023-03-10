@@ -12,7 +12,7 @@ public class PlayerHealth : MonoBehaviour
     float maximumHealth = 100f;
     float regenAmount = 5f;
     public bool isDie = false;
-    public bool isRegen = false;
+    bool isRegen = false;
     void Awake()
     {
         if (objInstance == null) 

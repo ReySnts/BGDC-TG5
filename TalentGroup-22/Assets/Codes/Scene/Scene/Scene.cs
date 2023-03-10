@@ -8,20 +8,8 @@ public class Scene : MonoBehaviour
     {
         Time.timeScale = 1f;
     }
-    protected virtual void RegisterGameObject(){}
-    protected virtual void DisableCertainConditions(GameObject gameObject){}
-    public void EnableAllGameObject()
-    {
-        foreach (GameObject gameObj in gameObjects) 
-        {
-            gameObj.SetActive(true);
-            DisableCertainConditions(gameObj);
-        }
-    }
-    public void DisableAllGameObject()
-    {
-        foreach (GameObject gameObj in gameObjects) gameObj.SetActive(false);
-    }
+    public virtual void EnableAllGameObject(){}
+    public virtual void DisableAllGameObject(){}
     public void Restart()
     {
         #region Delete Keys
